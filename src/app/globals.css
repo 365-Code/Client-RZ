@@ -1,33 +1,77 @@
+@import "~@flaticon/flaticon-uicons/css/all/all";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+body{
+  @apply flex flex-col min-h-screen;
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+body::-webkit-scrollbar{
+  @apply w-0;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+a{
+  @apply hover:text-pink-500 transition-all;
+}
+
+/* UTILITIES */
+.containerx{
+  @apply px-8 sm:px-12 md:px-16;
+}
+
+.container1{
+  @apply px-8 sm:px-12 md:px-20;
+}
+
+.containery{
+  @apply py-8 sm:py-12;
+}
+
+.brand{
+  @apply text-3xl;
+}
+
+.fi{
+  @apply flex justify-center items-center
+}
+
+.heading{
+  @apply tracking-widest font-medium;
+}
+
+.custom-scrollbar::-webkit-scrollbar{
+  @apply w-[4px] h-[4px];
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb{
+  @apply bg-[#222222] w-[4px] h-[4px];
+}
+
+.nav-link-selected{
+  @apply text-slate-900;
+}
+
+.nav-link-selected::before{
+  content: '';
+  @apply w-full h-[2px] bg-slate-900 bottom-0 z-10 absolute ;
+}
+
+.nav-link{
+  @apply relative hover:text-slate-900;
+}
+
+.nav-link::before{
+  content: '';
+  @apply w-0 h-[2px] bg-slate-900 bottom-0 left-1/2 -translate-x-1/2 z-10 absolute transition-all;
+}
+
+.nav-link:hover::before{
+  @apply w-full;
 }

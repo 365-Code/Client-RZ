@@ -1,0 +1,35 @@
+import React from "react";
+import ProductCard from "./ProductCard";
+
+const ShopProducts = () => {
+  return (
+    <section className="containery container1 space-y-2">
+      <h3 className="text-center text-3xl">Shop Our Product</h3>
+      <hr className="w-[100px] mx-auto bg-slate-900 h-[2px] rounded-lg" />
+      <div className="flex gap-8 justify-center py-4 flex-wrap">
+        <ProductCard
+          name="Marble Evolution"
+          material="Living Room"
+          image="https://img.freepik.com/free-photo/grey-marble-texture-background_24837-263.jpg?size=626&ext=jpg&ga=GA1.1.751509348.1705399346&semt=ais"
+        />
+        <ProductCard
+          name="Marble Evolution"
+          material="Living Room"
+          image="https://img.freepik.com/free-photo/black-marbled-surface_53876-90798.jpg?size=626&ext=jpg&ga=GA1.1.751509348.1705399346&semt=ais"
+        />
+        <ProductCard
+          name="Marble Evolution"
+          material="Living Room"
+          image="https://img.freepik.com/free-photo/closeup-marble-textured-background_53876-31896.jpg?size=626&ext=jpg&ga=GA1.1.751509348.1705399346&semt=ais"
+        />
+        <ProductCard
+          name="Marble Evolution"
+          material="Living Room"
+          image="https://img.freepik.com/free-photo/grey-marble-texture-background_24837-263.jpg?size=626&ext=jpg&ga=GA1.1.751509348.1705399346&semt=ais"
+        />
+      </div>
+    </section>
+  );
+};
+
+export default ShopProducts;
