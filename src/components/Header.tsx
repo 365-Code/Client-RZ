@@ -10,11 +10,13 @@ const Header = () => {
     <header>
       <div className="z-10 bg-white/30 backdrop-blur-sm container1 py-4 flex items-center justify-between fixed top-0 left-0 w-full">
         <h3 className="tracking-widest font-semibold text-2xl text px-2 py-1">
-          RIYAZ
+          Makrana Premium
         </h3>
         <div>
+          <i className="fi fi-sr" />
           <ul className="flex items-center gap-4 md:gap-8">
-            <li className="heading relative">
+            
+            <li className="heading relative hidden sm:block">
               <Link
                 className={pathname == "/" ? "nav-link-selected" : "nav-link"}
                 href={"/"}
@@ -22,7 +24,17 @@ const Header = () => {
                 HOME
               </Link>
             </li>
-            <li className="heading">
+
+            <li className="heading relative ">
+              <Link
+                className={"nav-link"}
+                href={"https://mine-art.vercel.app"}
+              >
+                Marble Products
+              </Link>
+            </li>
+
+            <li className="heading hidden">
               <Link
                 href={"/"}
                 className={
@@ -34,7 +46,7 @@ const Header = () => {
             </li>
             <li className="heading">
               <Link
-                href={"/"}
+                href={"/collections"}
                 className={
                   pathname == "/collections" ? "nav-link-selected" : "nav-link"
                 }
@@ -42,7 +54,7 @@ const Header = () => {
                 COLLECTIONS
               </Link>
             </li>
-            <li className="heading">
+            <li className="heading  hidden">
               <Link
                 href={"/"}
                 className={

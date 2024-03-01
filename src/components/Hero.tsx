@@ -8,27 +8,27 @@ const Hero = () => {
         <Image
           width={2000}
           height={2000}
-          src={"/img1.jpg"}
+          src={"/bg.jpg"}
           alt="image1"
-          className="w-full h-full object-fill"
+          className="w-full h-full object-cover sm:object-fill object-center"
         />
       </div>
       <div className="containery bg-black/30 w-full h-full absolute top-0 left-0">
-        <div className="text-white bg-transparent containery container1 flex flex-col gap-6 md:w-[800px]">
+        <div className="text-white bg-transparent h-full justify-center containery container1 flex flex-col gap-6 md:w-[800px]">
           <h3 className="text-5xl">
-            Lorem
-            <br />
-            ipsum dolor.
+            Makrana Premiums
           </h3>
           <hr className="w-[100px] h-[2px] bg-white" />
-          <p className="text-white leading-6">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint,
+          <p className="text-white text-lg  leading-6">
+            {/* Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint,
             dolorem! <br /> Lorem ipsum dolor sit amet consectetur adipisicing
-            elit.
+            elit. */}
+            The exceptional quality of Makrana marble truly elevates the elegance of any home.
+             The Makrana marble is renowned for its exceptional quality and is often used to enhance the beauty of homes.
           </p>
-          <button className="p-4 px-8 w-fit text-white bg-slate-900 hover:bg-slate-950 transition-all">
+          {/* <button className="p-4 px-8 w-fit text-white bg-slate-900 hover:bg-slate-950 transition-all">
             DOWNLOAD CATALOG
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

@@ -13,12 +13,13 @@ const Card = ({
   return (
     <div className="uppercase">
       <div className="w-[320px] h-[400px]">
-        <Image
+        <img
           width={500}
           height={700}
           src={image}
           alt="product1"
-          className="w-full h-full object-fill"
+          // className="w-full h-full object-fill"
+          className="w-full h-full object-cover"
         />
       </div>
       <h3 className="text-2xl tracking-wider">{name}</h3>
