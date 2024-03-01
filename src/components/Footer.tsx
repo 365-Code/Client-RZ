@@ -10,10 +10,10 @@ const Footer = () => {
           <h3 className="heading text-lg">CUSTOMER SERVICES</h3>
           <ul>
             <li className="text-center sm:text-start">
-              <Link href={"/help"}>Help & Contact</Link>
+              <Link href={"/"}>Help & Contact</Link>
             </li>
             <li className="text-center sm:text-start">
-              <Link href={"/help"}>Terms & Conditions</Link>
+              <Link href={"/"}>Terms & Conditions</Link>
             </li>
           </ul>
         </div>
@@ -22,14 +22,14 @@ const Footer = () => {
           <h3 className="heading text-lg">COMPANY</h3>
           <ul>
             <li className="text-center sm:text-start">
-              <Link href={"/help"}>About us</Link>
+              <Link href={"/"}>About us</Link>
             </li>
             <li className="text-center sm:text-start">
-              <Link href={"/help"}>FAQs</Link>
+              <Link href={"/"}>FAQs</Link>
             </li>
             
             <li className="text-center sm:text-start">
-              <Link href={"/help"}>Contact</Link>
+              <Link href={"/"}>Contact</Link>
             </li>
           </ul>
         </div>
@@ -38,17 +38,17 @@ const Footer = () => {
           <h3 className="heading text-lg">SOCIAL MEDIA</h3>
           <ul>
             <li className="text-center sm:text-start">
-              <Link href={"/help"}>Facebook</Link>
+              <Link href={"/"}>Facebook</Link>
             </li>
             <li className="text-center sm:text-start">
-              <Link href={"/help"}>Instagram</Link>
+              <Link href={"/"}>Instagram</Link>
             </li>
             
             <li className="text-center sm:text-start">
-              <Link href={"/help"}>Twitter</Link>
+              <Link href={"/"}>Twitter</Link>
             </li>
             <li className="text-center sm:text-start">
-              <Link href={"/help"}>LinkedIn</Link>
+              <Link href={"/"}>LinkedIn</Link>
             </li>
           </ul>
         </div>

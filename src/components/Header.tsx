@@ -9,9 +9,11 @@ const Header = () => {
   return (
     <header>
       <div className="z-10 bg-white/30 backdrop-blur-sm container1 py-4 flex items-center justify-between fixed top-0 left-0 w-full">
-        <h3 className="tracking-widest font-semibold text-2xl text px-2 py-1">
+        <Link href={'/'}>
+        <h3 className="hover:text-current tracking-widest font-semibold text-2xl text px-2 py-1">
           Makrana Premium
         </h3>
+        </Link>
         <div>
           <i className="fi fi-sr" />
           <ul className="flex items-center gap-4 md:gap-8">

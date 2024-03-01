@@ -18,7 +18,7 @@ body::-webkit-scrollbar{
   @apply w-0 h-0;
 }
 
-a{
+footer a{
   @apply hover:text-pink-500 transition-all;
 }
 
