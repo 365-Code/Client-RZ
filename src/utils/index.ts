@@ -1,8 +1,35 @@
-export type productType = {
-    image: string,
-    name: string,
-    material: string,
-    price: string
+// export type productType = {
+//     image: string,
+//     name: string,
+//     material: string,
+//     price: string
+// }
+
+export interface CategoryType {
+    name: string;
+    _id?: string;
+}
+
+export interface ProductType {
+    _id?: string;
+    name: string;
+    slug?: string;
+    type: string;
+    image: string;
+    material?: string;
+    category?: CategoryType;
+    price?: string;
+}
+
+export interface ProductInputType {
+    _id?: string;
+    name: string;
+    slug?: string;
+    type: string;
+    image: string;
+    material?: string;
+    category?: string;
+    price?: string;
 }
 
 export const products = [
@@ -79,4 +106,4 @@ export const products = [
         price: "120304"
     },
 
-] as Array<productType>
+] as Array<ProductType>

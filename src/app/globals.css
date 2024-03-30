@@ -3,12 +3,18 @@
 @tailwind components;
 @tailwind utilities;
 
+:root{
+  --card-size: 320px;
+  --max-card-size: 350px;
+}
+
 *{
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   @apply transition-all;
 }
+
 
 body{
   @apply flex flex-col min-h-screen;
@@ -23,15 +29,15 @@ footer a{
 }
 
 /* UTILITIES */
-.containerx{
+.container-x{
   @apply px-4 sm:px-12 md:px-16;
 }
 
 .container1{
-  @apply px-4 sm:px-16 md:px-24;
+  @apply px-2 min-[678px]:px-10 min-[1100px]:px-24;
 }
 
-.containery{
+.container-y{
   @apply py-8 sm:py-12;
 }
 
@@ -56,21 +62,21 @@ footer a{
 }
 
 .nav-link-selected{
-  @apply text-slate-900 relative;
+  @apply text-inherit relative;
 }
 
 .nav-link-selected::before{
   content: '';
-  @apply w-full h-[2px] bg-slate-900 bottom-0 left-0 z-10 absolute ;
+  @apply w-full h-[2px] bg-current bottom-0 left-0 z-10 absolute ;
 }
 
 .nav-link{
-  @apply relative hover:text-slate-900;
+  @apply relative hover:text-inherit;
 }
 
 .nav-link::before{
   content: '';
-  @apply w-0 h-[2px] bg-slate-900 bottom-0 left-1/2 -translate-x-1/2 z-10 absolute transition-all;
+  @apply w-0 h-[2px] bg-current bottom-0 left-1/2 -translate-x-1/2 z-10 absolute transition-all;
 }
 
 .nav-link:hover::before{
@@ -92,6 +98,10 @@ footer a{
 }
 
 .cards{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 300px));
+  grid-template-columns: repeat(auto-fit, minmax(var(--card-size), var(--max-card-size) ));
+  @apply grid justify-items-center justify-center md:justify-items-start;
+}
+
+.btn{
+  @apply rounded-lg px-3 py-2 max-w-[100px] sm:min-w-fit;
 }

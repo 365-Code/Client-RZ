@@ -2,7 +2,7 @@ import React from "react";
 
 const Subscribe = () => {
   return (
-    <section className="containery container1 space-y-2">
+    <section className="container-y container1 space-y-2">
       <h3 className="text-center text-2xl">CONTACT US</h3>
       <hr className="w-[100px] mx-auto bg-slate-900 h-[2px] rounded-lg" />
       <div className="flex w-[500px] max-w-full items-center justify-center min-w-fit mx-auto">

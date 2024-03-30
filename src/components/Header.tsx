@@ -1,24 +1,36 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 
 const Header = () => {
   const pathname = usePathname();
 
+  const [showNav, setShowNav] = useState(false);
+
   return (
     <header>
       <div className="z-10 bg-white/30 backdrop-blur-sm container1 py-4 flex items-center justify-between fixed top-0 left-0 w-full">
-        <Link href={'/'}>
-        <h3 className="hover:text-current tracking-widest font-semibold text-2xl text px-2 py-1">
-          Makrana Premium
-        </h3>
+        <Link href={"/"}>
+          <h3 className="hover:text-current tracking-widest font-medium sm:text-2xl text-lg px-2 py-1">
+            Makrana Premium
+          </h3>
         </Link>
         <div>
-          <i className="fi fi-sr" />
-          <ul className="flex items-center gap-4 md:gap-8">
-            
-            <li className="heading relative hidden sm:block">
+          <i
+            onClick={() => setShowNav(true)}
+            className="cursor-pointer fi fi-sr-menu-burger sm:hidden"
+          />
+          <ul
+            className={` ${
+              showNav ? "w-full  bg-black/40" : "overflow-hidden w-0"
+            } text-white sm:text-slate-900 flex flex-col py-8 sm:py-0 fixed top-0 left-0 h-screen sm:w-auto sm:h-auto sm:bg-inherit sm:static sm:flex-row items-center gap-4 md:gap-8`}
+          >
+            <i
+              onClick={() => setShowNav(false)}
+              className="fi fi-sr-cross cursor-pointer sm:hidden"
+            />
+            <li className="heading relative">
               <Link
                 className={pathname == "/" ? "nav-link-selected" : "nav-link"}
                 href={"/"}
@@ -29,24 +41,15 @@ const Header = () => {
 
             <li className="heading relative ">
               <Link
-                className={"nav-link"}
-                href={"https://mine-art.vercel.app"}
-              >
-                Marble Products
-              </Link>
-            </li>
-
-            <li className="heading hidden">
-              <Link
-                href={"/"}
                 className={
-                  pathname == "/about" ? "nav-link-selected" : "nav-link"
+                  pathname == "/products" ? "nav-link-selected" : "nav-link"
                 }
+                href={"/products"}
               >
-                ABOUT
+                MARBLE PRODUCTS
               </Link>
             </li>
-            <li className="heading">
+            <li className="heading relative">
               <Link
                 href={"/collections"}
                 className={
@@ -70,7 +73,7 @@ const Header = () => {
           </ul>
         </div>
       </div>
-      <div className="py-[35px]" />
+      <div className="py-[55px] sm:py-[35px]" />
     </header>
   );
 };

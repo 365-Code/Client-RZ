@@ -4,7 +4,7 @@ import React from "react";
 const Page = () => {
   const product = products[0];
   return (
-    <main className="containery container1">
+    <main className="container-y container1">
       <section className="flex md:flex-row flex-col gap-8 items-center container1">
         <div className="max-w-full max-h-full md:max-w-[550px] md:min-w-[550px]">
           <img

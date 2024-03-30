@@ -13,8 +13,8 @@ const Hero = () => {
           className="w-full h-full object-cover sm:object-fill object-center"
         />
       </div>
-      <div className="containery bg-black/30 w-full h-full absolute top-0 left-0">
-        <div className="text-white bg-transparent h-full justify-center containery container1 flex flex-col gap-6 md:w-[800px]">
+      <div className="container-y bg-black/30 w-full h-full absolute top-0 left-0">
+        <div className="text-white bg-transparent h-full justify-center container-y container1 flex flex-col gap-6 md:w-[800px]">
           <h3 className="text-5xl">
             Makrana Premiums
           </h3>
