@@ -1,6 +1,7 @@
 "use client";
 import { useAdmin } from "@/context/AdminSlice";
 import { ProductInputType, ProductType } from "@/utils";
+import Image from "next/image";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
@@ -101,8 +102,10 @@ const ProductInput = ({
           image: url || prodDet.image,
         } as ProductType);
       } else {
-        console.log("working");
-        await addProduct({ ...prodDet, image: url || prodDet.image } as ProductType);
+        await addProduct({
+          ...prodDet,
+          image: url || prodDet.image,
+        } as ProductType);
       }
       setEdit(false);
     } catch (error) {
@@ -122,7 +125,10 @@ const ProductInput = ({
         <label htmlFor="thumbnail" className="w-full relative">
           <div className="w-full cursor-pointer group/pCard relative flex flex-col justify-center items-center bg-black/10 rounded-xl h-[390px]">
             {url ? (
-              <img
+              <Image
+                width={600}
+                height={600}
+                alt={prodDet.name || "item"}
                 src={url || prodDet.image}
                 className="w-full h-full object-cover object-center"
               />
@@ -164,6 +170,7 @@ const ProductInput = ({
             <option value="handicraft">Handicraft</option>
           </select>
           <input
+            type="text"
             placeholder="Enter Product"
             name="name"
             value={prodDet.name}
@@ -172,6 +179,7 @@ const ProductInput = ({
           />
           {prodDet.type == "slab" ? (
             <input
+              type="text"
               placeholder="Enter Material"
               name="material"
               value={prodDet.material}

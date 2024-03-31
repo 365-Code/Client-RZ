@@ -55,7 +55,6 @@ export const AdminState = ({ children }: { children: React.ReactNode }) => {
 
       const res = await result.json();
       if (res.success) {
-        console.log(res.product);
         setProducts((preProd) => [res.product, ...preProd]);
         toast.success(res.msg);
       } else {

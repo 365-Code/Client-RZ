@@ -26,7 +26,7 @@ const VideoSection = () => {
         width={2000}
         height={2000}
         alt="image1"
-        src={"/img1.jpg"}
+        src={"/bg.jpg"}
         className="w-full h-full object-fill"
       />
       <div className="flex text-white items-center justify-center absolute top-0 left-0 h-full w-full bg-black/30">

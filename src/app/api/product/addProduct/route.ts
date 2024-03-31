@@ -33,8 +33,11 @@ export async function POST(req: NextRequest) {
     }
 
     const newProduct = await productModel.create({ ...productData, slug });
+
+    const product = productData.type == "slab" ? newProduct : newProduct.populate("category")
+  
     return NextResponse.json(
-      { success: true, product: newProduct.populate("category"), msg: "Product Added" },
+      { success: true, product , msg: "Product Added" },
       { status: 200 }
     );
   } catch (error) {

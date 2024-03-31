@@ -70,7 +70,7 @@ export const products = [
         price: "120304"
     },
     {
-        image: "https://res.cloudinary.com/dhji69hny/image/upload/v1709269439/img_8_l51uyr.jpg",
+        image: "https://res.cloudinary.com/dhji69hny/image/upload/v1709271302/img_8_l51uyr_c_crop_w_500_h_500_uihjbi.jpg",
         name: "Makrana Pink",
         material: "Doongri",
         price: "120304"
