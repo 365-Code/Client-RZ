@@ -7,10 +7,10 @@ const Page = () => {
   return (
     <main className="container-y container1">
       <AddCategory />
-      <div className="cards gap-8">
-        <AddProduct />
-        <DisplayProducts />
-      </div>
+      {/* <AddProduct /> */}
+      {/* <div className="cards gap-8"> */}
+        <DisplayProducts type="all"/>
+      {/* </div> */}
     </main>
   );
 };

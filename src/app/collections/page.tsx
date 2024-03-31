@@ -1,15 +1,10 @@
 import DisplayProducts from "@/components/DisplayProducts";
-import ProductCard from "@/components/ProductCard";
-import { products } from "@/utils";
 import React from "react";
 
 const Page = () => {
   return (
     <main className="container-y container1">
-      {/* <div className="cards gap-8"> */}
-      <div className="grid grid-cols-1 min-[678px]:grid-cols-2 min-[1100px]:grid-cols-3 min-[1400px]:grid-cols-4 gap-8">
         <DisplayProducts type="slab" />
-      </div>
     </main>
   );
 };

@@ -26,7 +26,7 @@ const VideoSection = () => {
         width={2000}
         height={2000}
         alt="image1"
-        src={"/bg.jpg"}
+        src={"https://img.freepik.com/free-photo/sink_74190-3600.jpg?t=st=1711877641~exp=1711881241~hmac=2ed96b4efc12b2da05021549605501b5884d18b8d4b9cc1bb38ae0fa2fbd0d82&w=1060"}
         className="w-full h-full object-fill"
       />
       <div className="flex text-white items-center justify-center absolute top-0 left-0 h-full w-full bg-black/30">

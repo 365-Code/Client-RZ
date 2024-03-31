@@ -8,7 +8,7 @@ export function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname
     
     if( path.includes('/auth/products') && (!cookies.has("token") || token !== process.env.ADMIN_TOKEN)) {
-        return NextResponse.redirect(new URL('/', request.url))
+        return NextResponse.redirect(new URL('/auth', request.url))
     }
 }
  

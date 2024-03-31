@@ -15,6 +15,8 @@ type AdminContextType = {
   setProducts: Dispatch<SetStateAction<ProductType[]>>;
   categories: CategoryType[];
   setCategories: Dispatch<SetStateAction<CategoryType[]>>;
+  materials: string[];
+  setMaterials: Dispatch<SetStateAction<string[]>>;
   admin: boolean;
   setAdmin: Dispatch<SetStateAction<boolean>>;
   addProduct: (prodDet: ProductType) => Promise<void>;
@@ -29,6 +31,7 @@ export const AdminState = ({ children }: { children: React.ReactNode }) => {
   const [admin, setAdmin] = useState(false);
   const [products, setProducts] = useState<ProductType[]>([]);
   const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [materials, setMaterials] = useState<string[]>([]);
 
   // PRODUCTS API
   const fetchAllProducts = async () => {
@@ -142,10 +145,24 @@ export const AdminState = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  // Materials API
+  const fetchAllMaterials = async () => {
+    try {
+      const result = await fetch("/api/product/fetchAllMaterials");
+      const res = await result.json();
+      if (res.success) {
+        setMaterials(res.materials);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     setAdmin(false);
     fetchAllProducts();
     fetchAllCategories();
+    fetchAllMaterials();
   }, []);
 
   return (
@@ -155,6 +172,8 @@ export const AdminState = ({ children }: { children: React.ReactNode }) => {
         setProducts,
         categories,
         setCategories,
+        materials,
+        setMaterials,
         admin,
         setAdmin,
         addProduct,
