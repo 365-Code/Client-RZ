@@ -11,7 +11,7 @@ const Home = () => {
     <main className="relative">
       <Hero/>
       <Latest />
-      <Companies/>
+      {/* <Companies/> */}
       <NewSection/>
       <ShopProducts />
       <Subscribe/>
