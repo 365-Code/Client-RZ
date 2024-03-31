@@ -25,7 +25,6 @@ const Page = () => {
                 method: "POST",
                 body: JSON.stringify(adminDet)
             })
-
             const res = await result.json()
             if(res.success){
                 setAdmin(true)
@@ -52,7 +51,7 @@ const Page = () => {
           <i className="fi fi-sr-lock p-4" />
           <input name="password" required value={adminDet.password} onChange={handleChange} type="password" placeholder="Enter Password" className="w-full outline-none border-b-2 p-1" />
         </div>
-        <button type="submit" />
+        <button type="submit" className="btn bg-blue-500 text-white hover:bg-blue-600">Login</button>
       </form>
     </div>
   );
