@@ -23,6 +23,7 @@ type AdminContextType = {
   deleteProduct: (pId: string) => Promise<void>;
   updateProduct: (pId: string, prod: ProductType) => Promise<void>;
   addCategory: (ctg: string) => Promise<void>;
+  fetchAllProducts: () => Promise<void>;
 };
 
 const AdminContext = createContext<AdminContextType | null>(null);
@@ -180,6 +181,7 @@ export const AdminState = ({ children }: { children: React.ReactNode }) => {
         deleteProduct,
         updateProduct,
         addCategory,
+        fetchAllProducts
       }}
     >
       {children}

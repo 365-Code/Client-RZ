@@ -1,12 +1,19 @@
 "use client";
+import { useAdmin } from "@/context/AdminSlice";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Header = () => {
   const pathname = usePathname();
 
   const [showNav, setShowNav] = useState(false);
+
+  const {fetchAllProducts} = useAdmin()
+
+  useEffect(() => {
+    fetchAllProducts()
+  }, [])
 
   return (
     <header>
