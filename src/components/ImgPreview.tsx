@@ -12,14 +12,18 @@ const ImgPreview = ({view, setView}: {view: string, setView: Dispatch<SetStateAc
         }`}
       >
         <div>
+          {
+            view && 
+            
           <Image
-            width={600}
-            height={600}
-            src={view}
-            alt="product1"
-            // className="w-full h-full object-fill"
-            className={`w-full h-full object-center object-scale-down `}
-          />
+          width={600}
+          height={600}
+          src={view || ""}
+          alt="product1"
+          // className="w-full h-full object-fill"
+          className={`w-full h-full object-center object-scale-down `}
+        />
+          }
         </div>
       </div>
   )

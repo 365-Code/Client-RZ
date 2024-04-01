@@ -129,7 +129,7 @@ const ProductInput = ({
                 width={600}
                 height={600}
                 alt={prodDet.name || "item"}
-                src={url || prodDet.image}
+                src={url || prodDet.image || ""}
                 className="w-full h-full object-cover object-center"
               />
             ) : !uploading ? (

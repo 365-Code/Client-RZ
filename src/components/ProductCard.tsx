@@ -49,7 +49,7 @@ const ProductCard = ({ product }: { product: ProductType }) => {
         <Image
           width={600}
           height={600}
-          src={product.image}
+          src={product.image || ""}
           alt="product1"
           onClick={() => setView(product.image)}
           className={`cursor-pointer w-full h-full object-center ${

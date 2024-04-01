@@ -4,7 +4,7 @@ import React from "react";
 const page = () => {
   return (
     <main className="container-y container1">
-        <DisplayProducts type="handicraft" />
+      <DisplayProducts type="handicraft" />
     </main>
   );
 };

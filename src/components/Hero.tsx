@@ -8,7 +8,7 @@ const Hero = () => {
         <Image
           width={2000}
           height={2000}
-          src={"/bg.jpg"}
+          src={"/bg.jpg" || ""}
           alt="image1"
           className="w-full h-full object-cover sm:object-fill object-center"
         />

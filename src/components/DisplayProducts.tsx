@@ -16,7 +16,7 @@ const DisplayProducts = ({
   ctg?: string;
   mtrl?: string;
 }) => {
-  const { products: items } = useAdmin();
+  const { products: items, fetchAllProducts } = useAdmin();
   const pathname = usePathname();
 
   const [products, setProducts] = useState<ProductType[]>([]);
@@ -24,6 +24,10 @@ const DisplayProducts = ({
   useEffect(() => {
     setProducts(items);
   }, [items]);
+
+  useEffect(() => {
+    fetchAllProducts()
+  }, [])
 
   return (
     <>

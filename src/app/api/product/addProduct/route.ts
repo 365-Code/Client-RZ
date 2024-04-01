@@ -14,11 +14,10 @@ interface productType {
 
 export async function POST(req: NextRequest) {
   try {
-    await connectDB();
+    connectDB();
     const productData = (await req.json()) as productType;
-
     const slug = slugify(productData.name.toLowerCase(), "-");
-    const existing = await productModel.findOne({ slug });
+    const existing = await productModel.findOne({slug});
     if (existing) {
       return NextResponse.json(
         { success: false, msg: "Product Already Exist" },
@@ -33,17 +32,19 @@ export async function POST(req: NextRequest) {
     }
 
     const newProduct = await productModel.create({ ...productData, slug });
-    
-    
-    const product = productData.type == "slab" ? newProduct : await newProduct.populate("category")
-  
+
+    const product =
+      productData.type == "slab"
+        ? newProduct
+        : await newProduct.populate("category");
+
     return NextResponse.json(
-      { success: true, product , msg: "Product Added" },
+      { success: true, product, msg: "Product Added" },
       { status: 200 }
     );
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json(
-      { success: false },
+      { success: false, msg: error.message },
       { status: 500, statusText: "Internal Server Error" }
     );
   }
