@@ -48,7 +48,7 @@ const Filter = ({
             className="p-2 rounded-xl outline-none border border-pink-500"
           >
             {ctgs.map((c) => (
-              <option value={c._id}>{c.name}</option>
+              <option key={c._id} value={c._id}>{c.name}</option>
             ))}
           </select>
         ))}
@@ -60,8 +60,8 @@ const Filter = ({
             id=""
             className="p-2 rounded-xl outline-none border border-pink-500"
           >
-            {mtrls.map((m) => (
-              <option value={m}>{m == "all" ? "All Materials" : m}</option>
+            {mtrls.map((m, i) => (
+              <option key={i} value={m}>{m == "all" ? "All Materials" : m}</option>
             ))}
           </select>
         ))}
