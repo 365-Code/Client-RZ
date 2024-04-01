@@ -2,6 +2,8 @@ import { connectDB } from "@/db";
 import productModel from "@/models/productModel";
 import { NextRequest, NextResponse } from "next/server";
 
+export const revalidate = 1
+
 export async function GET(req: NextRequest){
   try {
 
