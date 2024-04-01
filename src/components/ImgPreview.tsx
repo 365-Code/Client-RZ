@@ -7,7 +7,7 @@ const ImgPreview = ({view, setView}: {view: string, setView: Dispatch<SetStateAc
       onClick={() => setView("")}
         className={`bg-black/40 fixed ${
           view
-            ? "w-full h-full flex items-center justify-center z-10"
+            ? "w-full h-full top-0 left-0 flex items-center justify-center z-10"
             : "overflow-hidden h-0 w-0"
         }`}
       >

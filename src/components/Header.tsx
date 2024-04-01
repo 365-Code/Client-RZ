@@ -9,11 +9,23 @@ const Header = () => {
 
   const [showNav, setShowNav] = useState(false);
 
-  const {fetchAllProducts} = useAdmin()
+  const { products, setProducts } = useAdmin()
+
+  const fetchAllProducts = async () => {
+    try {
+      const data = await fetch('/api/product/fetchAllProducts');
+      const res = await data.json()
+      if(res.success){
+        setProducts(res.products)
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
-    fetchAllProducts()
-  }, [])
+    fetchAllProducts
+  }, [products])
 
   return (
     <header>
