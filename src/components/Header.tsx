@@ -11,21 +11,23 @@ const Header = () => {
 
   const { products, setProducts } = useAdmin()
 
-  const fetchAllProducts = async () => {
-    try {
-      const data = await fetch('/api/product/fetchAllProducts');
-      const res = await data.json()
-      if(res.success){
-        setProducts(res.products)
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }
+  // const fetchAllProducts = async () => {
+  //   try {
+  //     const data = await fetch('/api/product/fetchAllProducts');
+  //     const res = await data.json()
+  //     console.log(res);
+      
+  //     if(res.success){
+  //       setProducts(res.products)
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
-  useEffect(() => {
-    fetchAllProducts
-  }, [products])
+  // useEffect(() => {
+  //   fetchAllProducts()
+  // }, [])
 
   return (
     <header>

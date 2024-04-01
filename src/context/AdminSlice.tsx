@@ -162,11 +162,10 @@ export const AdminState = ({ children }: { children: React.ReactNode }) => {
   };
 
   useEffect(() => {
-    setAdmin(false);
-    fetchAllProducts();
-    fetchAllCategories();
-    fetchAllMaterials();
-  }, [products, categories, materials]);
+    fetchAllCategories()
+    fetchAllMaterials()
+    fetchAllProducts()
+  }, [])
 
   return (
     <AdminContext.Provider

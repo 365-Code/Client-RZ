@@ -33,8 +33,9 @@ export async function POST(req: NextRequest) {
     }
 
     const newProduct = await productModel.create({ ...productData, slug });
-
-    const product = productData.type == "slab" ? newProduct : newProduct.populate("category")
+    
+    
+    const product = productData.type == "slab" ? newProduct : await newProduct.populate("category")
   
     return NextResponse.json(
       { success: true, product , msg: "Product Added" },
