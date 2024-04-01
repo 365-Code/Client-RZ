@@ -2,8 +2,9 @@ import { connectDB } from "@/db";
 import productModel from "@/models/productModel";
 import { NextRequest, NextResponse } from "next/server";
 
+export const revalidate = 20
 
-export async function GET(req: NextRequest){
+export async function GET(){
   try {
     await connectDB()
     const products = await productModel.find().populate("category").sort({updatedAt: "desc"})

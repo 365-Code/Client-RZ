@@ -1,4 +1,5 @@
 import { connectDB } from "@/db";
+import categoryModel from "@/models/categoryModel";
 import productModel from "@/models/productModel";
 import { NextRequest, NextResponse } from "next/server";
 import slugify from "slugify";
@@ -15,6 +16,7 @@ interface productType {
 export async function POST(req: NextRequest) {
   try {
     connectDB();
+    categoryModel.find();
     const productData = (await req.json()) as productType;
     const slug = slugify(productData.name.toLowerCase(), "-");
     const existing = await productModel.findOne({slug});
@@ -44,8 +46,8 @@ export async function POST(req: NextRequest) {
     );
   } catch (error: any) {
     return NextResponse.json(
-      { success: false, msg: error.message },
-      { status: 500, statusText: "Internal Server Error" }
+      { success: false },
+      { status: 500, statusText: error.message }
     );
   }
 }
