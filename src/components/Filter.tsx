@@ -34,10 +34,11 @@ const Filter = ({
   };
 
   const ctgs = [{ _id: "all", name: "All Categories" }, ...categories];
-
   const mtrls = ["all", ...materials];
 
   return (
+    <>
+    <h1 className="text-5xl">Our Catalogue</h1>
     <div className="py-4 flex items-center flex-wrap gap-2">
       {type == "all" ||
         (type == "handicraft" && (
@@ -66,6 +67,8 @@ const Filter = ({
           </select>
         ))}
     </div>
+    </>
+
   );
 };
 
