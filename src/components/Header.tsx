@@ -32,6 +32,7 @@ const Header = () => {
             />
             <li className="heading relative">
               <Link
+                onClick={() => setShowNav(false)}
                 className={pathname == "/" ? "nav-link-selected" : "nav-link"}
                 href={"/"}
               >
@@ -41,6 +42,7 @@ const Header = () => {
 
             <li className="heading relative ">
               <Link
+                onClick={() => setShowNav(false)}
                 className={
                   pathname == "/products" ? "nav-link-selected" : "nav-link"
                 }
@@ -51,6 +53,7 @@ const Header = () => {
             </li>
             <li className="heading relative">
               <Link
+                onClick={() => setShowNav(false)}
                 href={"/collections"}
                 className={
                   pathname == "/collections" ? "nav-link-selected" : "nav-link"

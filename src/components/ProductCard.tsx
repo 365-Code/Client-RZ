@@ -7,6 +7,7 @@ import React, { useState } from "react";
 import Prompt from "./Prompt";
 import ProductInput from "./ProductInput";
 import { ProductType } from "@/utils";
+import ImgPreview from "./ImgPreview";
 
 const ProductCard = ({ product }: { product: ProductType }) => {
   const pathname = usePathname();
@@ -25,8 +26,11 @@ const ProductCard = ({ product }: { product: ProductType }) => {
 
   const [update, setUpdate] = useState(false);
 
+  const [view, setView] = useState("");
+
   return (
     <div className="uppercase">
+      <ImgPreview view={view} setView={setView} />
       <Prompt
         show={showPrompt}
         question={"Want to Delete " + product.name + " ?"}
@@ -37,18 +41,23 @@ const ProductCard = ({ product }: { product: ProductType }) => {
       {update && (
         <ProductInput setEdit={setUpdate} type="update" product={product} />
       )}
-      <div className="md:max-w-full min-w-[var(--card-size)] h-[400px] relative">
-        {/* <Image */}
-        {/* <Link href={'/product/' + name}> */}
+      <div
+        className={`md:max-w-full min-w-[var(--card-size)] relative ${
+          product.type == "handicraft" ? "sm:h-[400px]" : "h-[400px]"
+        } `}
+      >
         <Image
           width={600}
           height={600}
           src={product.image}
           alt="product1"
-          // className="w-full h-full object-fill"
-          className="w-full h-full object-cover object-center"
+          onClick={() => setView(product.image)}
+          className={`cursor-pointer w-full h-full object-center ${
+            product.type == "handicraft"
+              ? "object-contain sm:object-cover"
+              : "object-cover"
+          }`}
         />
-        {/* </Link> */}
         {pathname.includes("auth/products") && (
           <div className="absolute right-2 top-2 flex items-center gap-2">
             <button

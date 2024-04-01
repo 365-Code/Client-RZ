@@ -28,7 +28,8 @@ const DisplayProducts = ({
   return (
     <>
       <Filter type={type} products={products} setProducts={setProducts} />
-      <div className="grid grid-cols-1 min-[678px]:grid-cols-2 min-[1100px]:grid-cols-3 min-[1400px]:grid-cols-4 gap-8 justify-center justify-items-center">
+      <div className={`grid grid-cols-1  ${type == "handicraft" ? "min-[700px]:grid-cols-2 min-[1200px]:grid-cols-3 min-[1600px]:grid-cols-4" :"min-[678px]:grid-cols-2 min-[1100px]:grid-cols-3 min-[1400px]:grid-cols-4"} gap-8 justify-center justify-items-center`}>
+
         {pathname.includes("/auth/products") && <AddProduct />}
         {products.map((v, i) =>
           type && type !== "all" ? (
