@@ -10,6 +10,8 @@ import React, {
 } from "react";
 import { toast } from "react-toastify";
 
+export const revalidate = 20;
+
 type AdminContextType = {
   products: ProductType[];
   setProducts: Dispatch<SetStateAction<ProductType[]>>;
@@ -164,7 +166,7 @@ export const AdminState = ({ children }: { children: React.ReactNode }) => {
     fetchAllProducts();
     fetchAllCategories();
     fetchAllMaterials();
-  }, []);
+  }, [products, categories, materials]);
 
   return (
     <AdminContext.Provider
