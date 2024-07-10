@@ -4,7 +4,7 @@ import Card from "./Card";
 const Latest = () => {
   return (
     <section className="container1 container-y space-y-2">
-      <h3 className="text-center text-3xl">Latest Products</h3>
+      <h3 className="text-center text-3xl">Marble Slabs</h3>
       <hr className="w-[100px] mx-auto bg-slate-900 h-[2px] rounded-lg" />
       <div className="flex justify-center items-start gap-8 py-8 flex-wrap">
         <Card

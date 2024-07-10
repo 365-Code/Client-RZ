@@ -9,32 +9,14 @@ const Header = () => {
 
   const [showNav, setShowNav] = useState(false);
 
-  const { products, setProducts } = useAdmin()
-
-  // const fetchAllProducts = async () => {
-  //   try {
-  //     const data = await fetch('/api/product/fetchAllProducts');
-  //     const res = await data.json()
-  //     console.log(res);
-      
-  //     if(res.success){
-  //       setProducts(res.products)
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   fetchAllProducts()
-  // }, [])
-
   return (
     <header>
       <div className="z-10 bg-white/30 backdrop-blur-sm container1 py-4 flex items-center justify-between fixed top-0 left-0 w-full">
         <Link href={"/"}>
-          <h3 className="hover:text-current tracking-widest font-medium sm:text-2xl text-lg px-2 py-1">
-            Makrana Premium
+          <h3 className="hover:font-semibold transition-all tracking-widest font-medium sm:text-xl text-lg">
+            <span>Makrana</span>
+            <br />
+            <span>Premium</span>
           </h3>
         </Link>
         <div>
@@ -65,9 +47,11 @@ const Header = () => {
               <Link
                 onClick={() => setShowNav(false)}
                 className={
-                  pathname == "/products" ? "nav-link-selected" : "nav-link"
+                  pathname.includes("products")
+                    ? "nav-link-selected"
+                    : "nav-link"
                 }
-                href={"/products"}
+                href={"/products/all"}
               >
                 MARBLE PRODUCTS
               </Link>
@@ -75,12 +59,14 @@ const Header = () => {
             <li className="heading relative">
               <Link
                 onClick={() => setShowNav(false)}
-                href={"/collections"}
+                href={"/collections/all"}
                 className={
-                  pathname == "/collections" ? "nav-link-selected" : "nav-link"
+                  pathname.includes("collections")
+                    ? "nav-link-selected"
+                    : "nav-link"
                 }
               >
-                COLLECTIONS
+                MARBLE SLABS
               </Link>
             </li>
             <li className="heading  hidden">
