@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React from "react";
 
 const Hero = () => {
@@ -7,15 +6,6 @@ const Hero = () => {
       id="home"
       className="aspect-[5/2.5] h-[80vh] md:h-screen w-full relative"
     >
-      {/* <div className="w-full h-[90vh] overflow-hidden top-0 left-0">
-        <Image
-          width={2000}
-          height={2000}
-          src={"/bg.jpg"}
-          alt="hero"
-          className="w-full h-full object-cover sm:object-fill object-center"
-        />
-      </div> */}
       <div className="bg-black/30 w-full h-full absolute top-0 left-0 px-6 sm:px-0">
         <div className="container mx-auto h-full justify-center flex flex-col gap-6">
           <h1 className="sm:text-5xl md:text-6xl text-4xl text-white">

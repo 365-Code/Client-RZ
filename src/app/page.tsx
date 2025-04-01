@@ -10,7 +10,6 @@ const page = () => {
     <>
       <Hero />
       <About />
-      {/* <Latest /> */}
       <ShopProducts />
       <Article />
       <ContactUs />
