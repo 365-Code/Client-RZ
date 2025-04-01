@@ -1,57 +1,92 @@
-import Link from "next/link";
 import React from "react";
+import { Facebook, Instagram } from "lucide-react";
+import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="container1 py-16 bg-black/90 text-white">
-      <div className="flex flex-col items-center sm:items-start sm:flex-row justify-center gap-16">
-        {/* Customer Services */}
-        <div >
-          <h3 className="heading text-lg">CUSTOMER SERVICES</h3>
-          <ul>
-            <li className="text-center sm:text-start">
-              <Link href={"/"}>Help & Contact</Link>
+    <footer
+      id="footer"
+      className="dark:bg-charcoalBlack text-marbleWhite my-12"
+    >
+      <div className="max-w-6xl text-center md:text-left mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        {/* Brand Logo & Description */}
+        <div>
+          <h3 className="text-2xl font-bold text-champagneGold">
+            Makrana Premium
+          </h3>
+          <p className="mt-2 text-slateGray">
+            Exquisite marble craftsmanship blending tradition with luxury.
+          </p>
+        </div>
+
+        {/* Quick Links */}
+        <div>
+          <h4 className="text-xl font-semibold text-charcoalBlack dark:text-marbleWhite">
+            Quick Links
+          </h4>
+          <ul className="mt-2 space-y-2">
+            <li>
+              <Link
+                href="/#home"
+                className="text-slateGray hover:text-champagneGold transition"
+              >
+                Home
+              </Link>
             </li>
-            <li className="text-center sm:text-start">
-              <Link href={"/"}>Terms & Conditions</Link>
+            <li>
+              <Link
+                href="/#about"
+                className="text-slateGray hover:text-champagneGold transition"
+              >
+                About
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/collections"
+                className="text-slateGray hover:text-champagneGold transition"
+              >
+                Collections
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/#contact"
+                className="text-slateGray hover:text-champagneGold transition"
+              >
+                Contact
+              </Link>
             </li>
           </ul>
         </div>
-        {/* Company */}
-        <div >
-          <h3 className="heading text-lg">COMPANY</h3>
-          <ul>
-            <li className="text-center sm:text-start">
-              <Link href={"/"}>About us</Link>
-            </li>
-            <li className="text-center sm:text-start">
-              <Link href={"/"}>FAQs</Link>
-            </li>
-            
-            <li className="text-center sm:text-start">
-              <Link href={"/"}>Contact</Link>
-            </li>
-          </ul>
-        </div>
+
         {/* Social Media */}
         <div>
-          <h3 className="heading text-lg">SOCIAL MEDIA</h3>
-          <ul>
-            <li className="text-center sm:text-start">
-              <Link href={"/"}>Facebook</Link>
-            </li>
-            <li className="text-center sm:text-start">
-              <Link href={"/"}>Instagram</Link>
-            </li>
-            
-            <li className="text-center sm:text-start">
-              <Link href={"/"}>Twitter</Link>
-            </li>
-            <li className="text-center sm:text-start">
-              <Link href={"/"}>LinkedIn</Link>
-            </li>
-          </ul>
+          <h4 className="text-xl font-semibold text-charcoalBlack dark:text-marbleWhite">
+            Follow Us
+          </h4>
+          <div className="mt-4 flex space-x-4 md:w-fit justify-center items-center w-full">
+            <a
+              href="https://www.instagram.com/makranapremiummarble?igsh=OXk0YTR6NDdhczM1"
+              target="_blank"
+              className="text-slateGray hover:text-rose-400 transition"
+            >
+              <Instagram size={24} />
+            </a>
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              className="text-slateGray hover:text-blue-400 transition"
+            >
+              <Facebook size={24} />
+            </a>
+          </div>
         </div>
+      </div>
+
+      {/* Copyright */}
+      <div className="mt-8 text-center text-slateGray text-sm">
+        © 2025 Heritage Marble Arts. All Rights Reserved.
       </div>
     </footer>
   );

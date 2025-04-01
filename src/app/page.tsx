@@ -1,22 +1,21 @@
-import Companies from "@/components/Companies";
-import Hero from "@/components/Hero";
-import Latest from "@/components/Latest";
-import NewSection from "@/components/VideoSection";
-import ShopProducts from "@/components/ShopProducts";
-import Subscribe from "@/components/Subscribe";
+import About from "@/components/about";
+import Article from "@/components/article";
+import ContactUs from "@/components/contact-us";
+import { ShopProducts } from "@/components/gallery";
+import Hero from "@/components/hero";
 import React from "react";
 
-const Home = () => {
+const page = () => {
   return (
-    <main className="relative">
-      <Hero/>
-      <Latest />
-      {/* <Companies/> */}
-      <NewSection/>
+    <>
+      <Hero />
+      <About />
+      {/* <Latest /> */}
       <ShopProducts />
-      <Subscribe/>
-    </main>
+      <Article />
+      <ContactUs />
+    </>
   );
 };
 
-export default Home;
+export default page;

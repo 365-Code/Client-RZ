@@ -1,17 +1,35 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
- 
-// This function can be marked `async` if using `await` inside
-export function middleware(request: NextRequest) {
-    const cookies = request.cookies
-    const token = cookies.get("token")?.value;
-    const path = request.nextUrl.pathname
-    
-    if( path.includes('/auth/products') && (!cookies.has("token") || token !== process.env.ADMIN_TOKEN)) {
-        return NextResponse.redirect(new URL('/auth', request.url))
-    }
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { decrypt } from "./lib/session";
+
+const publicRoutes = ["/login"];
+const protectedRoutes = [
+  "/admin/dashboard",
+  "/admin/products",
+  "/admin/categories",
+];
+
+export async function middleware(req: NextRequest) {
+  const pathname = req.nextUrl.pathname;
+
+  const isPublicRoute = publicRoutes.includes(pathname);
+  const isProtectedRoute = protectedRoutes.includes(pathname);
+
+  const cookie = req.cookies.get("session")?.value;
+
+  const session = await decrypt(cookie);
+
+  if (isProtectedRoute && !session?.userId) {
+    return NextResponse.redirect(new URL("/login", req.nextUrl));
+  }
+
+  if (isPublicRoute && session?.userId) {
+    return NextResponse.redirect(new URL("/admin/dashboard", req.nextUrl));
+  }
+
+  return NextResponse.next();
 }
- 
+
 export const config = {
-  matcher: '/auth/:path*',
-}
+  matcher: ["/admin/:path", "/login"],
+};
