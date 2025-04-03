@@ -73,13 +73,13 @@ const Footer = () => {
             >
               <Instagram size={24} />
             </a>
-            <a
+            {/* <a
               href="https://facebook.com"
               target="_blank"
               className="text-slateGray hover:text-blue-400 transition"
             >
               <Facebook size={24} />
-            </a>
+            </a> */}
           </div>
         </div>
       </div>

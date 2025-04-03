@@ -22,13 +22,13 @@ const ContactUs = () => {
         <div className="space-y-6">
           <div className="flex sm:flex-row flex-col gap-4 justify-around sm:items-center">
             <div className="flex items-center gap-4">
-              <MapPin className="text-burntUmber" />
+              <MapPin className="text-burntUmber shrink-0" />
               <p className="md:text-lg text-charcoalBlack dark:text-marbleWhite">
                 Opposite to Modi Masjid Bypass Road, Makrana - 341505 India
               </p>
             </div>
             <div className="flex items-center gap-4">
-              <Phone className="text-burntUmber" />
+              <Phone className="text-burntUmber shrink-0" />
               <a
                 href="tel:+918290542702"
                 className="md:text-lg text-nowrap text-charcoalBlack dark:text-marbleWhite"
@@ -37,7 +37,7 @@ const ContactUs = () => {
               </a>
             </div>
             <div className="flex items-center gap-4">
-              <Mail className="text-burntUmber" />
+              <Mail size={35} className="text-burntUmber shrink-0" />
               <a
                 href="mailto:abdulriyaz1009@gmail.com?subject=Inquiry&body=Hello, I have a question about..."
                 className="md:text-lg text-charcoalBlack dark:text-marbleWhite hover:text-burntUmber transition"

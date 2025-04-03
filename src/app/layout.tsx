@@ -27,6 +27,10 @@ export const metadata: Metadata = {
   description:
     "Makrana Premium offers an exquisite collection of marble handicrafts and Makrana marble, renowned for their quality and craftsmanship.",
   keywords: [
+    "makrana premium",
+    "makrana primium",
+    "makranaprimium",
+    "makrana-premium",
     "white marble",
     "Makrana marble",
     "marble handicrafts",
@@ -64,23 +68,24 @@ export const metadata: Metadata = {
     "marble souvenirs",
     "unique marble items",
   ],
-  robots: "index, follow",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
     title: "Makrana Premium - Marble Handicrafts and Makrana Marble",
     description:
       "Discover the finest selection of marble handicrafts and Makrana marble at Makrana Premium. Perfect for home decor and artistic installations.",
-    images: {
-      url: "/logo.png",
-    },
   },
   twitter: {
     card: "summary_large_image",
     title: "Makrana Premium - Marble Handicrafts and Makrana Marble",
     description:
       "Discover the finest selection of marble handicrafts and Makrana marble at Makrana Premium. Perfect for home decor and artistic installations.",
-    images: {
-      url: "/ogImage.png",
-    },
   },
 };
 
