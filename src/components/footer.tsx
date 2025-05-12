@@ -6,7 +6,7 @@ const Footer = () => {
   return (
     <footer
       id="footer"
-      className="dark:bg-charcoalBlack text-marbleWhite my-12"
+      className="dark:bg-charcoalBlack text-marbleWhite mt-12 mb-6"
     >
       <div className="max-w-6xl text-center md:text-left mx-auto px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         {/* Brand Logo & Description */}
@@ -73,20 +73,13 @@ const Footer = () => {
             >
               <Instagram size={24} />
             </a>
-            {/* <a
-              href="https://facebook.com"
-              target="_blank"
-              className="text-slateGray hover:text-blue-400 transition"
-            >
-              <Facebook size={24} />
-            </a> */}
           </div>
         </div>
       </div>
 
       {/* Copyright */}
       <div className="mt-8 text-center text-slateGray text-sm">
-        © 2025 Heritage Marble Arts. All Rights Reserved.
+        © 2025 Makrana Premium. All Rights Reserved.
       </div>
     </footer>
   );

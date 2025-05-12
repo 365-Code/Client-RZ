@@ -37,7 +37,7 @@ const ContactUs = () => {
               </a>
             </div>
             <div className="flex items-center gap-4">
-              <Mail size={35} className="text-burntUmber shrink-0" />
+              <Mail className="text-burntUmber shrink-0" />
               <a
                 href="mailto:abdulriyaz1009@gmail.com?subject=Inquiry&body=Hello, I have a question about..."
                 className="md:text-lg text-charcoalBlack dark:text-marbleWhite hover:text-burntUmber transition"

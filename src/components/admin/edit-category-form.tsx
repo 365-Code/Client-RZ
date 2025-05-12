@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import mongoose from "mongoose";
 import { toast } from "sonner";
 import { fetchCategory, updateCategory, uploadToCloudinary } from "@/lib/api";
+import { Label } from "../ui/label";
 
 export default function EditCategoryForm({
   categoryId,
@@ -76,16 +77,16 @@ export default function EditCategoryForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <Input
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
 
-      <div className="flex flex-col gap-2 justify-between">
-        <input type="file" accept="image/*" onChange={handleImageChange} />
-        {preview && (
+      <Input id="categoryImage" type="file" accept="image/*" className="hidden" onChange={handleImageChange} />
+      {preview && (
+        <Label htmlFor="categoryImage">
           <Image
             unoptimized={true}
             src={preview}
@@ -94,10 +95,10 @@ export default function EditCategoryForm({
             height={100}
             className="rounded-md mx-auto"
           />
-        )}
-      </div>
+        </Label>
+      )}
 
-      <Button type="submit" disabled={loading}>
+      <Button className="w-full" type="submit" disabled={loading}>
         {loading ? "Saving..." : "Save Changes"}
       </Button>
     </form>

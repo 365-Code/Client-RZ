@@ -30,19 +30,19 @@ export default function AddProductForm({
   const [loading, setLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
-  useEffect(() => {
-    async function getCategories() {
-      try {
-        const data = await fetchCategories();
-        setCategories(data);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-        toast.error("Failed to load categories");
-      } finally {
-        setLoading(false);
-      }
+  async function getCategories() {
+    try {
+      const data = await fetchCategories();
+      setCategories(data);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      toast.error("Failed to load categories");
+    } finally {
+      setLoading(false);
     }
+  }
 
+  useEffect(() => {
     getCategories();
   }, []);
 

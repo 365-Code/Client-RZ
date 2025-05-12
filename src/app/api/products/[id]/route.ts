@@ -56,9 +56,10 @@ export async function PUT(
       );
     }
 
-    const slug = slugify(name, '-')
+    const productName = String(name).trim().toLowerCase();
+    const slug = slugify(productName, "-");
     const product = await Product.findByIdAndUpdate(productId, {
-      name: String(name).trim().toLowerCase(),
+      name: productName,
       slug,
       imageUrl,
       categoryId,

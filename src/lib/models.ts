@@ -4,6 +4,7 @@ import mongoose, { Schema, Document } from "mongoose";
 export interface ICategory extends Document {
   name: string;
   imageUrl: string;
+  slug: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -12,6 +13,7 @@ export interface ICategory extends Document {
 export interface IProduct extends Document {
   name: string;
   imageUrl: string;
+  slug: string;
   categoryId: mongoose.Types.ObjectId;
   createdAt: Date;
   updatedAt: Date;
@@ -20,7 +22,8 @@ export interface IProduct extends Document {
 // Category Schema
 const CategorySchema = new Schema<ICategory>(
   {
-    name: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
+    slug: { type: String, required: true, unique: true },
     imageUrl: { type: String, required: true },
   },
   {
@@ -41,6 +44,11 @@ const ProductSchema = new Schema<IProduct>(
   {
     name: { type: String, required: true },
     imageUrl: { type: String, required: true },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     categoryId: {
       type: Schema.Types.ObjectId,
       ref: "Category",

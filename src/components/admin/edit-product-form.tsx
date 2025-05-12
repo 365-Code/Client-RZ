@@ -19,6 +19,7 @@ import {
   uploadToCloudinary,
 } from "@/lib/api";
 import mongoose from "mongoose";
+import { Label } from "../ui/label";
 
 export default function EditProductForm({
   productId,
@@ -49,22 +50,23 @@ export default function EditProductForm({
     getCategories();
   }, []);
 
-  useEffect(() => {
-    async function getProduct() {
-      try {
-        const product = await fetchProduct(
-          new mongoose.Types.ObjectId(productId)
-        );
-        setName(product.name);
-        setCategory(product.categoryId);
-        setPreview(product.imageUrl);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-        toast.error("Failed to load categories");
-      } finally {
-        setLoading(false);
-      }
+  async function getProduct() {
+    try {
+      const product = await fetchProduct(
+        new mongoose.Types.ObjectId(productId)
+      );
+
+      setName(product.name);
+      setCategory(product.categoryId);
+      setPreview(product.imageUrl);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      toast.error("Failed to load categories");
+    } finally {
+      setLoading(false);
     }
+  }
+  useEffect(() => {
     getProduct();
   }, [productId]);
 
@@ -120,7 +122,7 @@ export default function EditProductForm({
 
       {/* Category Selection */}
       <Select value={category} onValueChange={setCategory}>
-        <SelectTrigger>
+        <SelectTrigger className="w-full">
           <SelectValue placeholder="Select a category" />
         </SelectTrigger>
         <SelectContent>
@@ -132,20 +134,24 @@ export default function EditProductForm({
         </SelectContent>
       </Select>
 
-      <div className="sm:flex-row flex-col gap-2 flex items-center justify-between">
-        <Input type="file" accept="image/*" onChange={handleImageChange} />
-      </div>
+      <Input
+        id="productImage"
+        type="file"
+        accept="image/*"
+        className="hidden"
+        onChange={handleImageChange}
+      />
       {preview && (
-        <div className="flex justify-center">
+        <Label htmlFor="productImage">
           <Image
             unoptimized={true}
             src={preview}
             alt="Preview"
             width={100}
             height={100}
-            className="rounded-md"
+            className="rounded-md mx-auto"
           />
-        </div>
+        </Label>
       )}
 
       <Button type="submit" disabled={loading} className="w-full">

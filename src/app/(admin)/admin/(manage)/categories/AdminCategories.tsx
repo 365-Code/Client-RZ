@@ -67,7 +67,7 @@ const AdminCategories = ({
     <div className="p-6 max-w-7xl mx-auto w-full">
       <h1 className="text-2xl font-semibold">Categories</h1>
 
-      <div className="flex justify-between items-center my-4">
+      <div className="flex flex-wrap justify-between items-center my-4">
         {/* Sorting Order Toggle */}
         <Button
           variant="ghost"
@@ -87,7 +87,7 @@ const AdminCategories = ({
       </div>
 
       <Table>
-        <TableCaption>A list of your categories.</TableCaption>
+        <TableCaption className="mb-4">A list of your categories.</TableCaption>
         <TableHeader>
           <TableRow className="text-center">
             <TableHead className="w-[110px] text-center">
@@ -146,7 +146,7 @@ const AdminCategories = ({
           {[...Array(totalPages)].map((_, i) => (
             <PaginationItem key={i}>
               <Button
-                variant={i + 1 === page ? "default" : "ghost"}
+                variant={i + 1 === page ? "default" : "secondary"}
                 onClick={() => handlePaging(i + 1)}
               >
                 {i + 1}
@@ -203,7 +203,7 @@ const CategoryActions = ({
       {/* Edit Category Dialog */}
       {editCategoryId && (
         <Dialog open={true} onOpenChange={() => closeDialog("edit")}>
-          <DialogContent className="backdrop-blur-md">
+          <DialogContent>
             <DialogHeader>
               <DialogTitle>Edit Category</DialogTitle>
             </DialogHeader>
@@ -218,7 +218,7 @@ const CategoryActions = ({
       {/* Delete Category Dialog */}
       {deleteCategoryId && (
         <Dialog open={true} onOpenChange={() => closeDialog("delete")}>
-          <DialogContent className="backdrop-blur-md">
+          <DialogContent>
             <DialogHeader>
               <DialogTitle>Delete Category</DialogTitle>
             </DialogHeader>

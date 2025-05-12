@@ -75,10 +75,10 @@ const AdminProducts = ({
   };
 
   return (
-    <div className="p-6 max-w-7xl mx-auto w-full">
+    <div className="md:p-6 py-6 max-w-7xl mx-auto w-full">
       <h1 className="text-2xl font-semibold">Products</h1>
 
-      <div className="flex justify-between items-center my-4">
+      <div className="flex-wrap flex gap-4 justify-between items-center my-4">
         <div className="flex items-center gap-4">
           {/* Filter By Category */}
           <Select
@@ -87,7 +87,7 @@ const AdminProducts = ({
             }
             value={selectedCategory ?? "all"}
           >
-            <SelectTrigger className="w-[200px]">
+            <SelectTrigger className="max-w-[200px]">
               <SelectValue placeholder="Filter by Category" />
             </SelectTrigger>
             <SelectContent>
@@ -109,7 +109,7 @@ const AdminProducts = ({
             }}
             value={searchParams.get("sort") ?? "date_added"} // Default sorting
           >
-            <SelectTrigger className="w-[200px]">
+            <SelectTrigger className="max-w-[200px]">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
@@ -118,7 +118,8 @@ const AdminProducts = ({
               <SelectItem value="name">Name</SelectItem>
             </SelectContent>
           </Select>
-
+        </div>
+        <div className="flex items-center">
           {/* Sorting Order Toggle */}
           <Button
             variant="ghost"
@@ -133,14 +134,13 @@ const AdminProducts = ({
           >
             {order === "asc" ? <SortAsc size={20} /> : <SortDesc size={20} />}
           </Button>
+          {/* Add product */}
+          <Button onClick={() => openDialog("add")}>Add Product</Button>
         </div>
-
-        {/* Add product */}
-        <Button onClick={() => openDialog("add")}>Add Product</Button>
       </div>
 
       <Table>
-        <TableCaption>A list of your products.</TableCaption>
+        <TableCaption className="mb-4">A list of your products.</TableCaption>
         <TableHeader>
           <TableRow className="text-center">
             <TableHead className="w-[100px] text-center">Item No</TableHead>
@@ -199,7 +199,7 @@ const AdminProducts = ({
           {[...Array(totalPages)].map((_, i) => (
             <PaginationItem key={i}>
               <Button
-                variant={i + 1 === page ? "default" : "ghost"}
+                variant={i + 1 === page ? "default" : "secondary"}
                 onClick={() => handlePaging(i + 1)}
               >
                 {i + 1}
