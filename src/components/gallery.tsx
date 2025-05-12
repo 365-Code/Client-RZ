@@ -8,7 +8,10 @@ import { Button } from "./ui/button";
 import { ChevronDown } from "lucide-react";
 import { getCategories } from "@/lib/actions";
 
+export const dynamic = 'force-dynamic'
+
 export const ShopProducts = async () => {
+
   const { categories } = await getCategories(undefined, undefined, 6);
 
   if (!categories) return notFound();

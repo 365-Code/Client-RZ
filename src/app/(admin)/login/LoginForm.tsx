@@ -89,6 +89,7 @@ const SubmitButton = () => {
   return (
     <Button
       type="submit"
+      variant={"default"}
       className="w-full bg-champagneGold hover:bg-champagneGold/90 text-charcoalBlack"
       disabled={pending}
     >
