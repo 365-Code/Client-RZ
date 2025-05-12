@@ -62,7 +62,7 @@ export async function fetchCategory(categoryId: mongoose.Types.ObjectId) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/categories/${categoryId}`
   );
-  if (!res.ok) throw new Error("Failed to fetch products");
+  if (!res.ok) throw new Error("Failed to fetch categories");
   const { category } = await res.json();
   return category;
 }

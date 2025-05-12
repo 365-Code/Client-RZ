@@ -1,4 +1,5 @@
 "use server";
+
 import { apiDefaults } from "@/lib/constant";
 import { connectDB } from "@/lib/db";
 import { Product } from "@/lib/models";
@@ -49,7 +50,7 @@ export async function getProducts(
 }
 
 export async function getCategories(
-  page?: number | 1,
+  page?: number,
   order?: string | "name",
   lmt?: number
 ): Promise<{
@@ -58,16 +59,17 @@ export async function getCategories(
 }> {
   await connectDB();
   const orderBy = order
-    ? (apiDefaults.orderMapping[order] as SortOrder)
+    ? (Number(apiDefaults.orderMapping[order]) as SortOrder)
     : undefined;
   const categories = JSON.parse(
     JSON.stringify(
-      await Category.find()
+      await Category.find({})
         .limit(lmt || limit)
         .skip(page ? (page - 1) * (lmt || limit) : 0)
         .sort(orderBy ? { name: orderBy } : { name: -1 })
     )
   );
+  if (!categories) throw new Error("Error fetching categories");
   const categoryCount = JSON.parse(
     JSON.stringify(await Category.find().countDocuments())
   );

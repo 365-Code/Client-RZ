@@ -31,7 +31,7 @@ export default function DeleteProductDialog({
         setLoading(false);
       }
     }
-    getProduct();
+    productId && getProduct();
   }, [productId]);
 
   const handleDelete = async () => {

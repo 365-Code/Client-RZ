@@ -67,7 +67,7 @@ export default function EditProductForm({
     }
   }
   useEffect(() => {
-    getProduct();
+    productId && getProduct();
   }, [productId]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -22,24 +22,24 @@ export default function DeleteCategoryDialog({
   const [confirmText, setConfirmText] = useState("");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    async function getCategory() {
-      try {
-        const category = await fetchCategory(
-          new mongoose.Types.ObjectId(categoryId)
-        );
-        setCategory({
-          name: category.name,
-          productCount: category.productCount,
-        });
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-        toast.error("Failed to load categories");
-      } finally {
-        setLoading(false);
-      }
+  async function getCategory() {
+    try {
+      const category = await fetchCategory(
+        new mongoose.Types.ObjectId(categoryId)
+      );
+      setCategory({
+        name: category.name,
+        productCount: category.productCount,
+      });
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+      toast.error("Failed to load categories");
+    } finally {
+      setLoading(false);
     }
-    getCategory();
+  }
+  useEffect(() => {
+    categoryId && getCategory();
   }, [categoryId]);
 
   const handleDelete = async () => {

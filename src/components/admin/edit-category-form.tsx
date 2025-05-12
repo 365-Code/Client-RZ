@@ -35,7 +35,7 @@ export default function EditCategoryForm({
         setLoading(false);
       }
     }
-    getCategory();
+    categoryId && getCategory();
   }, [categoryId]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
