@@ -15,6 +15,7 @@ export const generateMetadata = async ({
   params: Promise<PageProps>;
 }): Promise<Metadata> => {
   const { ctg } = await params;
+
   // const category = await getCategory(ctg as unknown as mongoose.Types.ObjectId);
   const category = await getCategory(new mongoose.Types.ObjectId(ctg));
 
@@ -49,11 +50,11 @@ export const generateMetadata = async ({
 
 const Page = async ({ params }: { params: Promise<PageProps> }) => {
   const { ctg } = await params;
-
+  // await new Promise((resolve) => setTimeout(resolve, 3000));
   const { products, productCount } = JSON.parse(
     JSON.stringify(await getProducts(ctg as unknown as mongoose.Types.ObjectId))
   );
-  
+
   if (!products) {
     return <div className="text-5xl text-center">404 No Products found</div>;
   }

@@ -5,11 +5,13 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Boxes, Package } from "lucide-react";
 import Visitors from "@/components/admin/visitors";
+// import  from "@/components/admin/visitors";
 
 export default function AdminDashboard() {
   const router = useRouter();
 
   return (
+    <>
     <div className="max-w-5xl mx-auto py-16 px-6">
       <h1 className="text-3xl font-bold text-center text-gray-900 dark:text-gray-100">
         Admin Dashboard
@@ -60,10 +62,9 @@ export default function AdminDashboard() {
       </div>
 
 
-
-      <Visitors />
-
-
     </div>
+
+    <Visitors />
+    </>
   );
 }

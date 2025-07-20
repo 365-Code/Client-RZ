@@ -2,7 +2,14 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
 import { Button } from "./ui/button";
 
 const WhatsAppContact = () => {
@@ -33,7 +40,7 @@ const WhatsAppContact = () => {
 
         {/* Chat Card */}
         {open && (
-          <Card className="max-w-xs shadow-xl overflow-hidden animate-in fade-in slide-in-from-bottom duration-300">
+          <Card className="max-w-2xs w-2xs border-none pt-0 shadow-xl overflow-hidden animate-in fade-in slide-in-from-bottom duration-300">
             <CardHeader className="p-4 bg-green-600">
               <div className="flex items-center gap-2 text-white">
                 <Image
@@ -63,11 +70,7 @@ const WhatsAppContact = () => {
               </Card>
             </CardContent>
             <CardFooter className="flex justify-between items-center">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setOpen(false)}
-              >
+              <Button variant="ghost" size="default" onClick={() => setOpen(false)} className="flex-1/2">
                 Close
               </Button>
               <a
