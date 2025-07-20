@@ -135,7 +135,7 @@
 }
 
 .nav-link {
-  @apply relative hover:text-inherit;
+  @apply relative;
 }
 
 .nav-link::before {

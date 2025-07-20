@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { Boxes, Package } from "lucide-react";
+import Visitors from "@/components/admin/visitors";
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -18,6 +19,7 @@ export default function AdminDashboard() {
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+
         {/* Products Management */}
         <Card
           className="cursor-pointer transition-transform hover:scale-105 shadow-md"
@@ -56,6 +58,12 @@ export default function AdminDashboard() {
           </CardContent>
         </Card>
       </div>
+
+
+
+      <Visitors />
+
+
     </div>
   );
 }

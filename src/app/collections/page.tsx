@@ -48,6 +48,8 @@ export const metadata: Metadata = {
   },
 };
 
+export const dynamic = 'auto'
+
 const Page = async () => {
   const { categories } = await getCategories();
 

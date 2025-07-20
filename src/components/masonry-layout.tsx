@@ -12,7 +12,7 @@ type LayoutType = {
 
 const MasonryLayout = ({ children, breakpoints }: LayoutType) => {
   return (
-    <div>
+    <div className="mx-auto">
       <Masonry
         breakpointCols={
           breakpoints

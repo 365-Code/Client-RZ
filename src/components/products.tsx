@@ -95,14 +95,14 @@ export default function Products({
       ) : (
         <>
           {/* Masonry Grid Layout */}
-          <MasonryLayout>
+          <MasonryLayout breakpoints={{1500: 4}}  >
             {products?.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </MasonryLayout>
 
           {/* Infinite Scroll Trigger */}
-          <div ref={observerRef} className="h-10 w-full mt-4"></div>
+          <div ref={observerRef} className="h-10 w-full mt-4" />
 
           {/* Loading Indicator */}
           {isLoading && (
@@ -122,7 +122,7 @@ export const ProductCard = ({ product }: { product: ProductType }) => {
     <>
       <Card
         key={product.id}
-        className="overflow-hidden shadow-none border-none transition-all duration-300 transform hover:scale-105 rounded-none p-0 h-fit max-w-2xs"
+        className="overflow-hidden shadow-none border-none transition-all duration-300 transform hover:scale-105 rounded-none p-0 h-fit max-w-xs mx-auto"
       >
         <Image
           unoptimized={true}

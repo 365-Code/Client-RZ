@@ -16,7 +16,7 @@ export default function Header() {
     { name: "home", url: "/" },
     { name: "about", url: "/#about" },
     { name: "collections", url: "/collections" },
-    { name: "contact us", url: "/#contact" },
+    { name: "contact us", url: "/contact" },
   ];
 
   useEffect(() => {
@@ -68,7 +68,7 @@ export default function Header() {
       id="header"
       className={`w-full top-0 left-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "fixed bg-marbleWhite/90 dark:bg-charcoalBlack/90 shadow-md backdrop-blur-md"
+          ? "fixed bg-white/10 shadow-md backdrop-blur-md"
           : "absolute bg-transparent"
       }`}
     >
@@ -91,8 +91,8 @@ export default function Header() {
             <Link
               key={section.name}
               href={section.url}
-              className={`dark:hover:text-champagneGold hover:text-champagneGold transition font-medium 
-                ${!isScrolled && pathname == "/" ? "text-white" : ""}
+              className={`hover:text-white transition font-medium 
+                text-slate-300 
                 ${
                   activeSection === section.url && pathname === "/"
                     ? "nav-link-selected font-semibold"

@@ -150,3 +150,4 @@ export async function deleteCategory(categoryId: mongoose.Types.ObjectId) {
   if (!res.ok) throw new Error("Failed to delete category");
   return res.json();
 }
+

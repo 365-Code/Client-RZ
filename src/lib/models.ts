@@ -74,3 +74,20 @@ export const Category =
   mongoose.model<ICategory>("Category", CategorySchema);
 export const Product =
   mongoose.models.Product || mongoose.model<IProduct>("Product", ProductSchema);
+
+import { Model } from "mongoose";
+
+export interface IVisitor extends Document {
+  visitorId: string;
+  firstVisit: Date;
+  lastSeen: Date;
+}
+
+const VisitorSchema = new Schema<IVisitor>({
+  visitorId: { type: String, required: true, unique: true },
+  firstVisit: { type: Date, required: true },
+  lastSeen: { type: Date, required: true },
+});
+
+export const Visitor: Model<IVisitor> =
+  mongoose.models.Visitor || mongoose.model<IVisitor>("Visitor", VisitorSchema);
