@@ -1,54 +1,54 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import Link from "next/link"
-import { Menu, X, Phone, Mail, ChevronDown } from "lucide-react"
-import Image from "next/image"
-import { usePathname } from "next/navigation"
-import { Button } from "@/components/ui/button"
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { Menu, X, Phone, Mail, ChevronDown } from "lucide-react";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
+import { Button } from "@/components/ui/button";
 
 export default function Header() {
-  const [menuOpen, setMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [activeSection, setActiveSection] = useState("home")
-  const [collectionsOpen, setCollectionsOpen] = useState(false)
-  const pathname = usePathname()
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState("home");
+  const [collectionsOpen, setCollectionsOpen] = useState(false);
+  const pathname = usePathname();
 
   const sections = [
     { name: "home", url: "/" },
-    { name: "about", url: "/#about" },
+    { name: "about", url: "/about" },
     {
       name: "collections",
       url: "/collections",
       hasDropdown: true,
       dropdownItems: [
-        { name: "Tables", url: "/collections/686f761a56f7bb04e1547a7a" },
-        { name: "Marble Slabs", url: "/collections/67e3d9c93b533a116b99d6f8" },
-        { name: "inlay & tables", url: "/collections/686d09a90c8d4186bd551091" },
-        { name: "basin", url: "/collections/67e3d5743b533a116b99d6ad" },
+        { name: "Makrana White", url: "/collections/makrana-white" },
+        { name: "Italian Marble", url: "/collections/italian" },
+        { name: "Indian Marble", url: "/collections/indian" },
+        { name: "Granite", url: "/collections/granite" },
       ],
     },
     { name: "contact us", url: "/contact" },
-  ]
+  ];
 
   useEffect(() => {
     if (typeof window !== "undefined" && menuOpen) {
-      document.body.style.overflow = "hidden"
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "auto"
+      document.body.style.overflow = "auto";
     }
-  }, [menuOpen])
+  }, [menuOpen]);
 
   // Track scroll position
   useEffect(() => {
     if (typeof window !== "undefined") {
       const handleScroll = () => {
-        setIsScrolled(window.scrollY > 50)
-      }
-      window.addEventListener("scroll", handleScroll)
-      return () => window.removeEventListener("scroll", handleScroll)
+        setIsScrolled(window.scrollY > 50);
+      };
+      window.addEventListener("scroll", handleScroll);
+      return () => window.removeEventListener("scroll", handleScroll);
     }
-  }, [])
+  }, []);
 
   // Intersection Observer for active sections
   useEffect(() => {
@@ -56,57 +56,36 @@ export default function Header() {
       root: null,
       rootMargin: "-50px 0px -50px 0px",
       threshold: 0.3,
-    }
+    };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          setActiveSection(entry.target.id)
+          setActiveSection(entry.target.id);
         }
-      })
-    }, options)
+      });
+    }, options);
 
     sections.forEach((section) => {
-      const element = document.getElementById(section.name)
-      if (element) observer.observe(element)
-    })
+      const element = document.getElementById(section.name);
+      if (element) observer.observe(element);
+    });
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
-  const isHomePage = pathname === "/"
+  const isHomePage = pathname === "/";
 
   return (
     <>
-      {/* Top Bar */}
-      {/* <div className="hidden lg:block bg-gray-900 text-white py-2">
-        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center text-sm">
-          <div className="flex items-center space-x-6">
-            <div className="flex items-center space-x-2">
-              <Phone className="w-4 h-4" />
-              <a href="tel:+917976973338" className="hover:text-yellow-400 transition-colors">
-                +91 79769 73338
-              </a>
-            </div>
-            <div className="flex items-center space-x-2">
-              <Mail className="w-4 h-4" />
-              <a href="mailto:abdulriyaz1009@gmail.com" className="hover:text-yellow-400 transition-colors">
-                abdulriyaz1009@gmail.com
-              </a>
-            </div>
-          </div>
-          <div className="text-gray-300">Mon - Fri: 9:00 AM - 6:00 PM | Sat: 9:00 AM - 4:00 PM</div>
-        </div>
-      </div> */}
-
       {/* Main Header */}
       <header
         className={`w-full top-0 left-0 z-50 transition-all duration-300 ${
           isScrolled
             ? "fixed bg-white/95 backdrop-blur-md shadow-lg"
             : isHomePage
-              ? "absolute bg-transparent"
-              : "absolute bg-white/90 backdrop-blur-sm"
+            ? "absolute bg-transparent"
+            : "absolute bg-white/90 backdrop-blur-sm"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
@@ -124,10 +103,18 @@ export default function Header() {
               <div className="absolute inset-0 rounded-full bg-gradient-to-r from-yellow-400 to-orange-400 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
             </div>
             <div className="hidden sm:block">
-              <h1 className={`text-xl font-bold ${isScrolled || !isHomePage ? "text-gray-900" : "text-white"}`}>
+              <h1
+                className={`text-xl font-bold ${
+                  isScrolled || !isHomePage ? "text-gray-900" : "text-white"
+                }`}
+              >
                 Makrana Premium
               </h1>
-              <p className={`text-xs ${isScrolled || !isHomePage ? "text-gray-600" : "text-gray-300"}`}>
+              <p
+                className={`text-xs ${
+                  isScrolled || !isHomePage ? "text-gray-600" : "text-gray-300"
+                }`}
+              >
                 Premium Marble Collection
               </p>
             </div>
@@ -140,18 +127,36 @@ export default function Header() {
                 <Link
                   href={section.url}
                   className={`flex items-center space-x-1 py-2 px-3 rounded-lg transition-all duration-300 font-medium ${
-                    activeSection === section.name && isHomePage
-                      ? "bg-yellow-400/20 text-yellow-400"
+                    pathname === section.url ||
+                    (section.name === "home" && pathname === "/") ||
+                    (section.name === "about" && pathname === "/about") ||
+                    (section.name === "collections" &&
+                      pathname.startsWith("/collections")) ||
+                    (section.name === "contact us" && pathname === "/contact")
+                      ? isScrolled || !isHomePage
+                        ? "bg-amber-100 text-amber-700"
+                        : "bg-white/20 text-amber-300"
                       : isScrolled || !isHomePage
-                        ? "text-gray-700 hover:text-yellow-600 hover:bg-yellow-50"
-                        : "text-white hover:text-yellow-400 hover:bg-white/10"
+                      ? "text-gray-700 hover:text-amber-600 hover:bg-amber-50"
+                      : "text-white hover:text-amber-400 hover:bg-white/10"
                   }`}
-                  onMouseEnter={() => section.hasDropdown && setCollectionsOpen(true)}
-                  onMouseLeave={() => section.hasDropdown && setCollectionsOpen(false)}
+                  onMouseEnter={() =>
+                    section.hasDropdown && setCollectionsOpen(true)
+                  }
+                  onMouseLeave={() =>
+                    section.hasDropdown && setCollectionsOpen(false)
+                  }
                 >
-                  <span>{section.name.charAt(0).toUpperCase() + section.name.slice(1)}</span>
+                  <span>
+                    {section.name.charAt(0).toUpperCase() +
+                      section.name.slice(1)}
+                  </span>
                   {section.hasDropdown && (
-                    <ChevronDown className={`w-4 h-4 transition-transform ${collectionsOpen ? "rotate-180" : ""}`} />
+                    <ChevronDown
+                      className={`w-4 h-4 transition-transform ${
+                        collectionsOpen ? "rotate-180" : ""
+                      }`}
+                    />
                   )}
                 </Link>
 
@@ -159,7 +164,9 @@ export default function Header() {
                 {section.hasDropdown && (
                   <div
                     className={`absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-xl border border-gray-200 py-2 transition-all duration-300 ${
-                      collectionsOpen ? "opacity-100 visible translate-y-0" : "opacity-0 invisible -translate-y-2"
+                      collectionsOpen
+                        ? "opacity-100 visible translate-y-0"
+                        : "opacity-0 invisible -translate-y-2"
                     }`}
                     onMouseEnter={() => setCollectionsOpen(true)}
                     onMouseLeave={() => setCollectionsOpen(false)}
@@ -181,12 +188,13 @@ export default function Header() {
 
           {/* CTA Button & Mobile Menu */}
           <div className="sm:hidden flex items-center space-x-4">
-
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className={`lg:hidden p-2 rounded-lg transition-colors ${
-                isScrolled || !isHomePage ? "text-gray-700 hover:bg-gray-100" : "text-white hover:bg-white/10"
+                isScrolled || !isHomePage
+                  ? "text-gray-700 hover:bg-gray-100"
+                  : "text-white hover:bg-white/10"
               }`}
             >
               {menuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -194,41 +202,96 @@ export default function Header() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
-        <nav
-          className={`lg:hidden transition-all duration-300 bg-white border-t border-gray-200 ${
-            menuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0 overflow-hidden"
+        {/* Mobile Menu - Full Screen Overlay */}
+        <div
+          className={`lg:hidden fixed inset-0 z-40 transition-all duration-300 ${
+            menuOpen ? "opacity-100 visible" : "opacity-0 invisible"
           }`}
         >
-          <div className="px-6 py-4 space-y-4">
-            {sections.map((section) => (
-              <div key={section.name}>
-                <Link
-                  href={section.url}
-                  className="block py-3 px-4 text-gray-700 hover:bg-yellow-50 hover:text-yellow-600 rounded-lg transition-colors font-medium"
-                  onClick={() => setMenuOpen(false)}
-                >
-                  {section.name.charAt(0).toUpperCase() + section.name.slice(1)}
-                </Link>
-                {section.hasDropdown && (
-                  <div className="ml-4 mt-2 space-y-2">
-                    {section.dropdownItems?.map((item) => (
-                      <Link
-                        key={item.name}
-                        href={item.url}
-                        className="block py-2 px-4 text-gray-600 hover:text-yellow-600 transition-colors"
-                        onClick={() => setMenuOpen(false)}
-                      >
-                        {item.name}
-                      </Link>
-                    ))}
-                  </div>
-                )}
+          {/* Backdrop */}
+          <div
+            className="absolute inset-0 bg-black/50 backdrop-blur-sm h-screen"
+            onClick={() => setMenuOpen(false)}
+          />
+
+          {/* Menu Content */}
+          <div
+            className={`h-screen absolute top-0 right-0 w-80 max-w-[85vw] bg-white shadow-2xl transform transition-transform duration-300 ${
+              menuOpen ? "translate-x-0" : "translate-x-full"
+            }`}
+          >
+            {/* Header */}
+            <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <div className="flex items-center space-x-3">
+                <Image
+                  unoptimized={true}
+                  className="rounded-full w-10 h-10"
+                  src="/logo.png"
+                  alt="Makrana Premium"
+                  width={40}
+                  height={40}
+                />
+                <div>
+                  <h2 className="font-bold text-gray-900">Makrana Premium</h2>
+                  <p className="text-xs text-gray-600">Premium Marble</p>
+                </div>
               </div>
-            ))}
+              <button
+                onClick={() => setMenuOpen(false)}
+                className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Navigation */}
+            <div className="p-6 space-y-2">
+              {sections.map((section) => (
+                <div key={section.name}>
+                  <Link
+                    href={section.url}
+                    className={`flex items-center justify-between py-3 px-4 rounded-lg transition-colors font-medium ${
+                      pathname === section.url ||
+                      (section.name === "home" && pathname === "/") ||
+                      (section.name === "about" && pathname === "/about") ||
+                      (section.name === "collections" &&
+                        pathname.startsWith("/collections")) ||
+                      (section.name === "contact us" && pathname === "/contact")
+                        ? "bg-amber-100 text-amber-700"
+                        : "text-gray-700 hover:bg-gray-100"
+                    }`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    <span>
+                      {section.name.charAt(0).toUpperCase() +
+                        section.name.slice(1)}
+                    </span>
+                    {section.hasDropdown && <ChevronDown className="w-4 h-4" />}
+                  </Link>
+                  {section.hasDropdown && (
+                    <div className="ml-4 mt-2 space-y-1">
+                      {section.dropdownItems?.map((item) => (
+                        <Link
+                          key={item.name}
+                          href={item.url}
+                          className={`block py-2 px-4 rounded-lg text-sm transition-colors ${
+                            pathname === item.url
+                              ? "bg-amber-50 text-amber-600"
+                              : "text-gray-600 hover:text-amber-600 hover:bg-gray-50"
+                          }`}
+                          onClick={() => setMenuOpen(false)}
+                        >
+                          {item.name}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
           </div>
-        </nav>
+        </div>
       </header>
     </>
-  )
+  );
 }

@@ -2,16 +2,42 @@
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { ProductType } from "@/lib/types";
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import type { ProductType } from "@/lib/types";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 import { fetchProducts } from "@/lib/api";
-import MasonryLayout from "./masonry-layout";
+import {
+  Search,
+  Grid3X3,
+  List,
+  SortAsc,
+  SortDesc,
+  Filter,
+  Home,
+  ChevronRight,
+  PartyPopper,
+} from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import MasonryLayout from "./utils/masonry-layout";
+import ProductCard from "./utils/product-card";
+import Link from "next/link";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "./ui/breadcrumb";
+
+type ViewMode = "grid" | "list";
+type SortOption = "name" | "newest" | "oldest";
 
 export default function Products({
   initialProducts,
@@ -23,19 +49,63 @@ export default function Products({
   productCount: number;
 }) {
   const [products, setProducts] = useState<ProductType[]>(initialProducts);
+  const [filteredProducts, setFilteredProducts] =
+    useState<ProductType[]>(initialProducts);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  const [sortBy, setSortBy] = useState<SortOption>("newest");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const observerRef = useRef<HTMLDivElement | null>(null);
 
-  // Fetch more products when scrolling down
+  // Get category name from first product
+  const categoryName =
+    products[0]?.categoryId?.name
+      ?.replace(/-/g, " ")
+      .replace(/\b\w/g, (c: string) => c.toUpperCase()) || "Products";
+
+  // Filter and sort products
+  useEffect(() => {
+    const filtered = products.filter((product) =>
+      product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    // Sort products
+    filtered.sort((a, b) => {
+      let comparison = 0;
+      switch (sortBy) {
+        case "name":
+          comparison = a.name.localeCompare(b.name);
+          break;
+        case "newest":
+          comparison =
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+          break;
+        case "oldest":
+          comparison =
+            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+          break;
+        default:
+          comparison =
+            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      }
+      return sortOrder === "asc" ? comparison : -comparison;
+    });
+
+    setFilteredProducts(filtered);
+  }, [products, searchQuery, sortBy, sortOrder]);
+
+  // Fetch more products
   const fetchMoreProducts = async () => {
     if (isLoading) return;
     setIsLoading(true);
-
     try {
-      const { products } = await fetchProducts(ctg, page + 1);
-      setProducts((prev) => [...prev, ...products]);
-      setPage((prev) => prev + 1);
+      const { products: newProducts } = await fetchProducts(ctg, page + 1);
+      if (products) {
+        setProducts((prev) => [...prev, ...newProducts]);
+        setPage((prev) => prev + 1);
+      }
     } catch (error) {
       console.error("Error fetching more products:", error);
     } finally {
@@ -43,7 +113,7 @@ export default function Products({
     }
   };
 
-  // Infinite Scroll with Intersection Observer
+  // Infinite scroll
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -60,105 +130,243 @@ export default function Products({
 
     if (observerRef.current) observer.observe(observerRef.current);
     return () => observer.disconnect();
-  }, [isLoading]);
+  }, [isLoading, products.length, productCount]);
 
   return (
-    <div className="max-w-7xl w-full mx-auto px-6 mt-[80px]">
-      <h1 className="text-3xl font-bold text-center text-charcoalBlack dark:text-marbleWhite mb-8">
-        Our Premium Marble Products
-      </h1>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      {/* Hero Section */}
+      <div className="relative bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white pt-24 pb-16">
+        <div className="absolute inset-0 bg-black/20"></div>
+        <div className="relative max-w-7xl mx-auto px-6">
+          {/* Breadcrumbs */}
+          <nav className="flex items-center space-x-2 text-gray-300 mb-8">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink>
+                    <Home size={"20px"} />
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/collections">
+                    Collections
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink href={"/collections/" + ctg}>
+                    {categoryName}
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </nav>
 
-      {products.length === 0 ? (
-        <div className="flex flex-col items-center justify-center text-center p-10">
-          <Image
-            unoptimized={true}
-            src="/empty-box.svg"
-            alt="No products"
-            width={200}
-            height={200}
-            className="mb-4"
-          />
-          <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-            No products in this category yet!
-          </h2>
-          <p className="text-gray-500 mt-2">
-            Check back later or explore other categories.
-          </p>
-          <Button
-            className="mt-4"
-            variant="outline"
-            onClick={() => window.location.reload()}
-          >
-            Refresh
-          </Button>
-        </div>
-      ) : (
-        <>
-          {/* Masonry Grid Layout */}
-          <MasonryLayout breakpoints={{1500: 4}}  >
-            {products?.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </MasonryLayout>
+          <div className="text-center">
+            <div className="inline-flex items-center space-x-2 bg-amber-600/20 rounded-full px-4 py-2 mb-6">
+              <Filter className="w-4 h-4 text-amber-400" />
+              <span className="text-amber-300 text-sm font-medium">
+                Premium Collection
+              </span>
+            </div>
 
-          {/* Infinite Scroll Trigger */}
-          <div ref={observerRef} className="h-10 w-full mt-4" />
+            <h1 className="text-4xl lg:text-6xl font-bold mb-6 leading-tight">
+              {categoryName}
+              <span className="block text-2xl lg:text-3xl font-normal text-gray-300 mt-2">
+                Marble Collection
+              </span>
+            </h1>
 
-          {/* Loading Indicator */}
-          {isLoading && (
-            <p className="text-center text-gray-600 mt-4">
-              Loading more products...
+            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
+              Discover our exquisite collection of {categoryName.toLowerCase()}{" "}
+              crafted with precision and artistry from the finest Makrana
+              marble.
             </p>
-          )}
-        </>
-      )}
+
+            {/* Stats */}
+            <div className="flex items-center justify-center space-x-8">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white">
+                  {productCount}
+                </div>
+                <div className="text-gray-300 text-sm">Products</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white">Premium</div>
+                <div className="text-gray-300 text-sm">Quality</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-white">Handcrafted</div>
+                <div className="text-gray-300 text-sm">Excellence</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Filters and Controls */}
+      <div className="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200 shadow-sm">
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+            {/* Search */}
+            <div className="relative flex-1 max-w-md">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Input
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 pr-4 py-2 border-gray-300 focus:border-amber-500 focus:ring-amber-500"
+              />
+            </div>
+
+            {/* Controls */}
+            <div className="flex items-center space-x-4">
+              {/* Sort */}
+              <Select
+                value={sortBy}
+                onValueChange={(value: SortOption) => setSortBy(value)}
+              >
+                <SelectTrigger className="w-40">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="newest">Newest First</SelectItem>
+                  <SelectItem value="oldest">Oldest First</SelectItem>
+                  <SelectItem value="name">Name</SelectItem>
+                </SelectContent>
+              </Select>
+
+              {/* Sort Order */}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() =>
+                  setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+                }
+                className="border-gray-300"
+              >
+                {sortOrder === "asc" ? (
+                  <SortAsc className="w-4 h-4" />
+                ) : (
+                  <SortDesc className="w-4 h-4" />
+                )}
+              </Button>
+
+              {/* View Mode */}
+              <div className="flex border border-gray-300 rounded-lg overflow-hidden">
+                <Button
+                  variant={viewMode === "grid" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("grid")}
+                  className="rounded-none bg-amber-600 hover:bg-amber-700"
+                >
+                  <Grid3X3 className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={viewMode === "list" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("list")}
+                  className="rounded-none"
+                >
+                  <List className="w-4 h-4" />
+                </Button>
+              </div>
+
+              {/* Results Count */}
+              <Badge
+                variant="secondary"
+                className="px-3 py-1 bg-amber-100 text-amber-800"
+              >
+                {filteredProducts.length} results
+              </Badge>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Products Section */}
+      <div className="max-w-7xl mx-auto px-6 py-12">
+        {filteredProducts.length === 0 ? (
+          <div className="flex flex-col items-center justify-center text-center py-20">
+            <div className="relative mb-8">
+              <Image
+                src="/empty-box.svg?height=200&width=300"
+                alt="No products found"
+                width={300}
+                height={200}
+                className="opacity-50"
+              />
+            </div>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              {searchQuery
+                ? "No products match your search"
+                : "No products in this category yet!"}
+            </h2>
+            <p className="text-gray-600 mb-8 max-w-md">
+              {searchQuery
+                ? "Try adjusting your search terms or browse our other categories."
+                : "Check back later or explore other categories while we add more products."}
+            </p>
+            <div className="flex space-x-4">
+              {searchQuery && (
+                <Button onClick={() => setSearchQuery("")} variant="outline">
+                  Clear Search
+                </Button>
+              )}
+              <Button
+                onClick={() => window.location.reload()}
+                className="bg-amber-600 hover:bg-amber-700"
+              >
+                Refresh Page
+              </Button>
+            </div>
+          </div>
+        ) : (
+          <>
+            {viewMode === "grid" ? (
+              <MasonryLayout breakpoints={{ 1500: 4, 1200: 3, 768: 2, 500: 1 }}>
+                {filteredProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </MasonryLayout>
+            ) : (
+              <div className="space-y-6">
+                {filteredProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} listView />
+                ))}
+              </div>
+            )}
+
+            {/* Infinite Scroll Trigger */}
+            <div ref={observerRef} className="h-10 w-full mt-8" />
+
+            {/* Loading Indicator */}
+            {isLoading && (
+              <div className="flex items-center justify-center py-12">
+                <div className="flex items-center space-x-3">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-600"></div>
+                  <span className="text-gray-600 font-medium">
+                    Loading more products...
+                  </span>
+                </div>
+              </div>
+            )}
+
+            {/* End of Results */}
+            {!isLoading && products.length >= productCount && (
+              <div className="text-center py-12">
+                <div className="inline-flex items-center space-x-2 bg-gray-100 rounded-full px-6 py-3">
+                  <span className="text-gray-600">
+                    <PartyPopper /> You&apos;ve seen all products in this
+                    category!
+                  </span>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }
-
-export const ProductCard = ({ product }: { product: ProductType }) => {
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  return (
-    <>
-      <Card
-        key={product.id}
-        className="overflow-hidden shadow-none border-none transition-all duration-300 transform hover:scale-105 rounded-none p-0 h-fit max-w-xs mx-auto"
-      >
-        <Image
-          unoptimized={true}
-          src={product.imageUrl}
-          alt={product.name}
-          width={400}
-          height={500}
-          className="cursor-pointer transition-transform duration-300 hover:scale-110"
-          onClick={() => setSelectedImage(product.imageUrl)}
-        />
-        <CardHeader className="m-0 p-0">
-          <CardTitle className="capitalize">{product.name}</CardTitle>
-          <CardDescription className="capitalize">
-            {product.categoryId.name}
-          </CardDescription>
-        </CardHeader>
-      </Card>
-
-      
-      {selectedImage && (
-        <div
-          className="fixed inset-0 bg-black/40 bg-opacity-80 flex justify-center items-center z-50"
-          onClick={() => setSelectedImage(null)}
-        >
-          <div className="max-w-3xl w-full px-4">
-            <Image
-              unoptimized={true}
-              src={selectedImage}
-              alt="Zoomed Product"
-              width={800}
-              height={800}
-              className="w-auto h-[90vh] object-contain mx-auto rounded-lg"
-            />
-          </div>
-        </div>
-      )}
-    </>
-  );
-};

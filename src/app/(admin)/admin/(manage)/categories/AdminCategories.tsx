@@ -1,165 +1,182 @@
-"use client";
-import { useRouter, useSearchParams } from "next/navigation";
-import React from "react";
-import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Pen, SortAsc, SortDesc, Trash2 } from "lucide-react";
+"use client"
+
+import { useRouter, useSearchParams } from "next/navigation"
+import Image from "next/image"
+import { Button } from "@/components/ui/button"
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { Pen, SortAsc, SortDesc, Trash2, Plus } from "lucide-react"
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
   PaginationPrevious,
   PaginationNext,
-} from "@/components/ui/pagination";
-import { CategoryType } from "@/lib/types";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import DeleteCategoryDialog from "@/components/admin/delete-category-dialog";
-import EditCategoryForm from "@/components/admin/edit-category-form";
-import AddCategoryForm from "@/components/admin/add-category-form";
+} from "@/components/ui/pagination"
+import type { CategoryType } from "@/lib/types"
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import DeleteCategoryDialog from "@/components/admin/delete-category-dialog"
+import EditCategoryForm from "@/components/admin/edit-category-form"
+import AddCategoryForm from "@/components/admin/add-category-form"
 
 interface AdminCategoriesParams {
-  page: number | 1;
-  totalPages: number;
-  categories: CategoryType[];
+  page: number | 1
+  totalPages: number
+  categories: CategoryType[]
 }
 
-const AdminCategories = ({
-  page,
-  totalPages,
-  categories,
-}: AdminCategoriesParams) => {
-  const router = useRouter();
+const AdminCategories = ({ page, totalPages, categories }: AdminCategoriesParams) => {
+  const router = useRouter()
+  const searchParams = useSearchParams()
 
-  const searchParams = useSearchParams();
-
-  const isAddDialogOpen = searchParams.get("add") === "true";
-  const editCategoryId = searchParams.get("edit");
-  const deleteCategoryId = searchParams.get("delete");
-  const order = searchParams.get("order");
+  const isAddDialogOpen = searchParams.get("add") === "true"
+  const editCategoryId = searchParams.get("edit")
+  const deleteCategoryId = searchParams.get("delete")
+  const order = searchParams.get("order")
 
   const openDialog = (type: "add" | "edit" | "delete", id?: string) => {
-    const newUrl = new URL(window.location.href);
-    newUrl.searchParams.set(type, id || "true");
-    router.replace(newUrl.toString(), { scroll: false });
-  };
+    const newUrl = new URL(window.location.href)
+    newUrl.searchParams.set(type, id || "true")
+    router.replace(newUrl.toString(), { scroll: false })
+  }
 
   const handlePaging = (newPage: number) => {
-    const newUrl = new URL(window.location.href);
-    newUrl.searchParams.set("page", newPage.toString());
-    router.push(newUrl.toString());
-  };
+    const newUrl = new URL(window.location.href)
+    newUrl.searchParams.set("page", newPage.toString())
+    router.push(newUrl.toString())
+  }
 
   return (
-    <div className="p-6 max-w-7xl mx-auto w-full">
-      <h1 className="text-2xl font-semibold">Categories</h1>
-
-      <div className="flex flex-wrap justify-between items-center my-4">
-        {/* Sorting Order Toggle */}
-        <Button
-          variant="ghost"
-          onClick={() => {
-            const newOrder =
-              searchParams.get("order") === "asc" ? "desc" : "asc";
-            const newUrl = new URL(window.location.href);
-            newUrl.searchParams.set("order", newOrder);
-            router.push(newUrl.toString());
-          }}
-          className="p-2"
-        >
-          Sort By
-          {order === "asc" ? <SortAsc size={20} /> : <SortDesc size={20} />}
+    <div className="p-6">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-6">
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Categories Management</h1>
+          <p className="text-gray-600">Organize your marble product categories</p>
+        </div>
+        <Button onClick={() => openDialog("add")} className="bg-amber-600 hover:bg-amber-700">
+          <Plus className="w-4 h-4 mr-2" />
+          Add Category
         </Button>
-        <Button onClick={() => openDialog("add")}>Add Category</Button>
       </div>
 
-      <Table>
-        <TableCaption className="mb-4">A list of your categories.</TableCaption>
-        <TableHeader>
-          <TableRow className="text-center">
-            <TableHead className="w-[110px] text-center">
-              Category No.
-            </TableHead>
-            <TableHead className="w-[200px] text-center">Name</TableHead>
-            <TableHead className="text-center">Image</TableHead>
-            <TableHead className="text-center">Actions</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {categories.map((c, index) => (
-            <TableRow key={c.id}>
-              <TableCell className="text-center font-medium">
-                {index + 1}
-              </TableCell>
-              <TableCell className="text-center font-medium">
-                {c.name}
-              </TableCell>
-              <TableCell>
-                <Image
-                  unoptimized={true}
-                  width={150}
-                  height={150}
-                  alt={c.name}
-                  className="mx-auto rounded-md aspect-square min-w-[100px]"
-                  src={c.imageUrl}
-                />
-              </TableCell>
-              <TableCell className="text-center space-x-2 text-nowrap">
-                <Button onClick={() => openDialog("edit", c.id)}>
-                  <Pen size={20} />
-                  <span className="hidden sm:inline">Edit</span>
-                </Button>
-                <Button
-                  variant="destructive"
-                  onClick={() => openDialog("delete", c.id)}
-                >
-                  <Trash2 size={20} />
+      {/* Controls */}
+      <div className="bg-gray-50 rounded-lg p-4 mb-6">
+        <div className="flex items-center justify-end">
+          {/* Sort Order */}
+          <Button
+            variant="outline"
+            onClick={() => {
+              const newOrder = searchParams.get("order") === "asc" ? "desc" : "asc"
+              const newUrl = new URL(window.location.href)
+              newUrl.searchParams.set("order", newOrder)
+              router.push(newUrl.toString())
+            }}
+            className="bg-white"
+          >
+            {order === "asc" ? <SortAsc size={16} /> : <SortDesc size={16} />}
+            <span className="ml-2">Sort {order === "asc" ? "A-Z" : "Z-A"}</span>
+          </Button>
+        </div>
+      </div>
 
-                  <span className="hidden sm:inline">Delete</span>
-                </Button>
-              </TableCell>
+      {/* Categories Table */}
+      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+        <Table>
+          <TableCaption className="py-4 text-gray-600">
+            Showing {categories.length} categories • Page {page} of {totalPages}
+          </TableCaption>
+          <TableHeader>
+            <TableRow className="bg-gray-50">
+              <TableHead className="w-16 text-center font-semibold">#</TableHead>
+              <TableHead className="font-semibold">Category Name</TableHead>
+              <TableHead className="w-32 text-center font-semibold">Image</TableHead>
+              <TableHead className="w-32 text-center font-semibold">Actions</TableHead>
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableHeader>
+          <TableBody>
+            {categories.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={4} className="text-center py-8">
+                  <div className="flex flex-col items-center space-y-2">
+                    <p className="text-gray-500">No categories found</p>
+                  </div>
+                </TableCell>
+              </TableRow>
+            ) : (
+              categories.map((category, index) => (
+                <TableRow key={category.id} className="hover:bg-gray-50">
+                  <TableCell className="text-center font-medium text-gray-600">{(page - 1) * 10 + index + 1}</TableCell>
+                  <TableCell className="font-medium">{category.name}</TableCell>
+                  <TableCell className="text-center">
+                    <div className="flex justify-center">
+                      <Image
+                        unoptimized={true}
+                        width={60}
+                        height={60}
+                        alt={category.name}
+                        className="rounded-lg object-cover border border-gray-200"
+                        src={category.imageUrl || "/placeholder.svg"}
+                      />
+                    </div>
+                  </TableCell>
+                  <TableCell className="text-center">
+                    <div className="flex items-center justify-center space-x-2">
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => openDialog("edit", category.id)}
+                        className="border-blue-200 text-blue-700 hover:bg-blue-50"
+                      >
+                        <Pen size={14} />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => openDialog("delete", category.id)}
+                        className="border-red-200 text-red-700 hover:bg-red-50"
+                      >
+                        <Trash2 size={14} />
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
+          </TableBody>
+        </Table>
+      </div>
 
-      <Pagination>
-        <PaginationContent className="mt-4">
-          {page > 1 && (
-            <PaginationItem>
-              <PaginationPrevious onClick={() => handlePaging(page - 1)} />
-            </PaginationItem>
-          )}
-          {[...Array(totalPages)].map((_, i) => (
-            <PaginationItem key={i}>
-              <Button
-                variant={i + 1 === page ? "default" : "secondary"}
-                onClick={() => handlePaging(i + 1)}
-              >
-                {i + 1}
-              </Button>
-            </PaginationItem>
-          ))}
-          {page < totalPages && (
-            <PaginationItem>
-              <PaginationNext onClick={() => handlePaging(page + 1)} />
-            </PaginationItem>
-          )}
-        </PaginationContent>
-      </Pagination>
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-6">
+          <Pagination>
+            <PaginationContent>
+              {page > 1 && (
+                <PaginationItem>
+                  <PaginationPrevious onClick={() => handlePaging(page - 1)} />
+                </PaginationItem>
+              )}
+              {[...Array(totalPages)].map((_, i) => (
+                <PaginationItem key={i}>
+                  <Button
+                    variant={i + 1 === page ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => handlePaging(i + 1)}
+                    className={i + 1 === page ? "bg-amber-600 hover:bg-amber-700" : ""}
+                  >
+                    {i + 1}
+                  </Button>
+                </PaginationItem>
+              ))}
+              {page < totalPages && (
+                <PaginationItem>
+                  <PaginationNext onClick={() => handlePaging(page + 1)} />
+                </PaginationItem>
+              )}
+            </PaginationContent>
+          </Pagination>
+        </div>
+      )}
 
       <CategoryActions
         isAddDialogOpen={isAddDialogOpen}
@@ -167,34 +184,35 @@ const AdminCategories = ({
         deleteCategoryId={deleteCategoryId}
       />
     </div>
-  );
-};
+  )
+}
 
-export default AdminCategories;
+export default AdminCategories
 
 const CategoryActions = ({
   isAddDialogOpen,
   editCategoryId,
   deleteCategoryId,
 }: {
-  isAddDialogOpen: boolean;
-  editCategoryId: string | null;
-  deleteCategoryId: string | null;
+  isAddDialogOpen: boolean
+  editCategoryId: string | null
+  deleteCategoryId: string | null
 }) => {
-  const router = useRouter();
+  const router = useRouter()
 
   const closeDialog = (type: "add" | "edit" | "delete") => {
-    const newUrl = new URL(window.location.href);
-    newUrl.searchParams.delete(type);
-    router.replace(newUrl.toString(), { scroll: false });
-  };
+    const newUrl = new URL(window.location.href)
+    newUrl.searchParams.delete(type)
+    router.replace(newUrl.toString(), { scroll: false })
+  }
+
   return (
     <div>
       {/* Add Category Dialog */}
       <Dialog open={isAddDialogOpen} onOpenChange={() => closeDialog("add")}>
-        <DialogContent className="backdrop-blur-md">
+        <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>Add Category</DialogTitle>
+            <DialogTitle className="text-xl font-bold">Add New Category</DialogTitle>
           </DialogHeader>
           <AddCategoryForm onCategoryAdded={() => router.refresh()} />
         </DialogContent>
@@ -203,14 +221,11 @@ const CategoryActions = ({
       {/* Edit Category Dialog */}
       {editCategoryId && (
         <Dialog open={true} onOpenChange={() => closeDialog("edit")}>
-          <DialogContent>
+          <DialogContent className="max-w-2xl">
             <DialogHeader>
-              <DialogTitle>Edit Category</DialogTitle>
+              <DialogTitle className="text-xl font-bold">Edit Category</DialogTitle>
             </DialogHeader>
-            <EditCategoryForm
-              categoryId={editCategoryId}
-              onCategoryUpdated={() => router.refresh()}
-            />
+            <EditCategoryForm categoryId={editCategoryId} onCategoryUpdated={() => router.refresh()} />
           </DialogContent>
         </Dialog>
       )}
@@ -220,16 +235,16 @@ const CategoryActions = ({
         <Dialog open={true} onOpenChange={() => closeDialog("delete")}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Delete Category</DialogTitle>
+              <DialogTitle className="text-xl font-bold">Delete Category</DialogTitle>
             </DialogHeader>
             <DeleteCategoryDialog
               categoryId={deleteCategoryId}
-              onCategoryDeleted={() => router.refresh}
+              onCategoryDeleted={() => router.refresh()}
               onClose={() => closeDialog("delete")}
             />
           </DialogContent>
         </Dialog>
       )}
     </div>
-  );
-};
+  )
+}

@@ -15,7 +15,11 @@ export async function getProducts(
   page?: number | 1,
   sort?: string | "createdAt",
   order?: string | "asc"
-): Promise<{ products: ProductType[]; totalPages: number }> {
+): Promise<{
+  products: ProductType[];
+  // totalPages: number
+  productCount: number;
+}> {
   await connectDB();
 
   const sortBy = sort ? apiDefaults.sortMapping[sort] : undefined;
@@ -41,12 +45,12 @@ export async function getProducts(
     )
   );
 
-  const productCount = JSON.parse(
-    JSON.stringify(
-      await Product.find(categoryId ? { categoryId } : {}).countDocuments()
-    )
-  );
-  return { products, totalPages: Math.ceil(productCount / limit) };
+  const productCount = await Product.findOne({ categoryId }).countDocuments();
+  return {
+    products,
+    // totalPages: Math.ceil(productCount / limit)
+    productCount,
+  };
 }
 
 export async function getCategories(

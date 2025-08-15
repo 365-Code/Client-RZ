@@ -2,6 +2,7 @@ import { getProducts } from "@/lib/actions";
 import { getCategories } from "@/lib/actions";
 import AdminProducts from "./AdminProducts";
 import mongoose from "mongoose";
+import { apiDefaults } from "@/lib/constant";
 
 export default async function ProductsPage({
   searchParams,
@@ -10,7 +11,7 @@ export default async function ProductsPage({
 }) {
   const { page, category, sort, order } = await searchParams;
 
-  const { products, totalPages } = await getProducts(
+  const { products, productCount } = await getProducts(
     category ? new mongoose.Types.ObjectId(category) : undefined,
     typeof Number(page) == "number" ? Number(page) : 1,
     sort,
@@ -20,11 +21,16 @@ export default async function ProductsPage({
 
   return (
     <AdminProducts
-      page={Number(page)}
+      page={Number(page || 1)}
       selectedCategory={category}
       products={products}
       categories={categories}
-      totalPages={totalPages}
+      totalPages={Math.floor(
+        productCount / apiDefaults.limit + (productCount % apiDefaults.limit) >=
+          1
+          ? 1
+          : 0
+      )}
     />
   );
 }

@@ -38,6 +38,7 @@ export async function fetchProducts(category?: string, page?: number) {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/products?categoryId=${category}&page=${page}`
   );
+  
   if (!res.ok) throw new Error("Failed to fetch products");
   return res.json();
 }

@@ -121,9 +121,9 @@
   }
 }
 
-#home {
+/* #home {
   background: url("/bg.jpg") no-repeat center center/cover;
-}
+} */
 
 .nav-link-selected {
   @apply text-inherit relative;

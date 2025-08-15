@@ -1,5 +1,5 @@
 export const apiDefaults = {
-  limit: 10,
+  limit: 12,
   sortMapping: {
     date_added: "createdAt",
     updated: "updatedAt",
@@ -25,6 +25,7 @@ export const staticCategories = [
   },
   {
     name: "marble slab",
+    slug: "marble-slab",
     imageUrl:
       "https://res.cloudinary.com/dhji69hny/image/upload/v1742985650/makrana-premium/if9uefk6p31kj0memugs.jpg",
     createdAt: "2025-03-26T10:41:13.865Z",
@@ -40,17 +41,17 @@ export const staticCategories = [
     id: "6820662bffbc096b3bece839",
   },
   {
-    name: "inlay & tables",
-    slug: "inlay-and-tables",
+    id: "689eb91ebc8a8860974c1c5a",
+    name: "fire palace",
+    slug: "fire-palace",
     imageUrl:
-      "https://res.cloudinary.com/dhji69hny/image/upload/v1751976357/makrana-premium/qfeljsifhmde2z3njycq.png",
-    createdAt: "2025-07-08T12:06:01.565Z",
-    updatedAt: "2025-07-08T12:06:01.565Z",
-    id: "686d09a90c8d4186bd551091",
+      "https://res.cloudinary.com/dhji69hny/image/upload/v1753005288/makrana-premium/qdyzmernbbcgso0sr7av.jpg",
+    createdAt: "2025-07-10T08:13:14.472+00:00",
+    updatedAt: "2025-07-30T06:23:49.311+00:00",
   },
   {
-    name: "fountain",
-    slug: "fountain",
+    name: "fountain & flooring",
+    slug: "fountain-and-flooring",
     imageUrl:
       "https://res.cloudinary.com/dhji69hny/image/upload/v1753004908/makrana-premium/tq7j94qvnwtrmiblzwpl.jpg",
     createdAt: "2025-07-20T09:48:32.344Z",

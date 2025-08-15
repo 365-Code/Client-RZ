@@ -51,8 +51,8 @@ export const generateMetadata = async ({
 const Page = async ({ params }: { params: Promise<PageProps> }) => {
   const { ctg } = await params;
   // await new Promise((resolve) => setTimeout(resolve, 3000));
-  const { products, productCount } = JSON.parse(
-    JSON.stringify(await getProducts(ctg as unknown as mongoose.Types.ObjectId))
+  const { products, productCount } = await getProducts(
+    ctg as unknown as mongoose.Types.ObjectId
   );
 
   if (!products) {

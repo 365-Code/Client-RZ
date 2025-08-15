@@ -15,7 +15,7 @@ export default async function ProductsPage({
 
   return (
     <AdminCategories
-      page={Number(page)}
+      page={Number(page || 1)}
       categories={categories}
       totalPages={totalPages}
     />

@@ -1,142 +1,231 @@
-import MasonryLayout from "@/components/masonry-layout"
-import { getCategories } from "@/lib/actions"
-import type { CategoryType } from "@/lib/types"
-import type { Metadata } from "next"
-import Image from "next/image"
-import Link from "next/link"
-import { ArrowRight, Sparkles, Award, Users } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+"use client";
 
-export const metadata: Metadata = {
-  title: "Marble Handicraft Collections",
-  description:
-    "Explore the exquisite collections of marble handicrafts at Makrana Premium. Discover unique and beautifully crafted marble art pieces, sculptures, decor, and more.",
-  keywords: [
-    "white marble",
-    "Makrana marble",
-    "marble handicrafts",
-    "premium marble",
-    "marble design collection",
-    "marble artistry",
-    "marble traditional crafts",
-    "marble souvenirs",
-    "unique marble items",
-    "marble collections",
-    "premium marble items",
-    "handcrafted marble",
-    "marble design collections",
-    "marble slabs collection",
-    "marble slabs",
-    "white marble slabs",
-  ],
-  openGraph: {
-    title: "Makrana Premium - Marble Handicraft Collections",
-    description:
-      "Explore the exquisite collections of marble handicrafts at Makrana Premium. Discover unique and beautifully crafted marble art pieces, sculptures, decor, and more.",
-    images: {
-      url: "/ogImage.png",
-    },
-    url: "https://www.makranapremium.com/collections",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Makrana Premium - Marble Handicrafts Collections",
-    description:
-      "Explore the exquisite collections of marble handicrafts at Makrana Premium. Discover unique and beautifully crafted marble art pieces, sculptures, decor, and more.",
-    images: {
-      url: "/ogImage.png",
-    },
-  },
-}
+import { useState, useEffect } from "react";
+import MasonryLayout from "@/components/utils/masonry-layout";
+import { getCategories } from "@/lib/actions";
+import type { CategoryType } from "@/lib/types";
+import {
+  ArrowRight,
+  Sparkles,
+  Award,
+  Users,
+  Search,
+  Grid3X3,
+  List,
+  SortAsc,
+  SortDesc,
+  Heart,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import CategoryCard from "@/components/utils/category-card";
+import Image from "next/image";
 
-export const dynamic = "auto"
+type ViewMode = "grid" | "list";
+type SortOption = "name" | "newest" | "oldest";
 
-const Page = async () => {
-  const { categories } = await getCategories()
+export default function CollectionsPage() {
+  const [categories, setCategories] = useState<CategoryType[]>([]);
+  const [filteredCategories, setFilteredCategories] = useState<CategoryType[]>(
+    []
+  );
+  const [searchQuery, setSearchQuery] = useState("");
+  const [viewMode, setViewMode] = useState<ViewMode>("grid");
+  const [sortBy, setSortBy] = useState<SortOption>("newest");
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Fetch categories on component mount
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const { categories: fetchedCategories } = await getCategories();
+        setCategories(fetchedCategories);
+        setFilteredCategories(fetchedCategories);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  // Filter and sort categories
+  useEffect(() => {
+    const filtered = categories.filter((category) =>
+      category.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    // Sort categories
+    filtered.sort((a, b) => {
+      let comparison = 0;
+      switch (sortBy) {
+        case "name":
+          comparison = a.name.localeCompare(b.name);
+          break;
+        case "newest":
+          comparison =
+            new Date(b.createdAt || 0).getTime() -
+            new Date(a.createdAt || 0).getTime();
+          break;
+        case "oldest":
+          comparison =
+            new Date(a.createdAt || 0).getTime() -
+            new Date(b.createdAt || 0).getTime();
+          break;
+        default:
+          comparison =
+            new Date(b.createdAt || 0).getTime() -
+            new Date(a.createdAt || 0).getTime();
+      }
+      return sortOrder === "asc" ? comparison : -comparison;
+    });
+
+    setFilteredCategories(filtered);
+  }, [categories, searchQuery, sortBy, sortOrder]);
+
+  if (isLoading) {
+    return <LoadingSkeleton />;
+  }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-purple-600 to-blue-800 text-white py-20">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <div className="relative max-w-7xl mx-auto px-6">
-          <div className="text-center mt-4">
-            <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
-              <Sparkles className="w-4 h-4 text-yellow-300" />
-              <span className="text-sm font-medium">Premium Collections</span>
+      <section className="relative overflow-hidden bg-gradient-to-l from-gray-800 via-gray-700 to-gray-800 text-white pt-32 pb-24">
+        <div className="absolute inset-0 bg-black/30"></div>
+
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-10 left-10 w-40 h-40 border border-white/30 rounded-full"></div>
+          <div className="absolute bottom-16 right-16 w-28 h-28 border border-white/30 rounded-full"></div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center space-x-2 bg-indigo-600/20 backdrop-blur-sm rounded-full px-6 py-3 mb-8">
+              <Sparkles className="w-5 h-5 text-indigo-400" />
+              <span className="text-lg font-medium text-indigo-300">
+                Explore Our Collections
+              </span>
             </div>
 
-            <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              Discover Marble
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-300">
-                Elegance
+            <h1 className="text-4xl lg:text-5xl font-semibold mb-6 leading-tight">
+              Discover Timeless
+              <span className="block text-transparent bg-clip-text bg-gradient-to-l from-indigo-400 to-pink-400">
+                Marble Creations
               </span>
             </h1>
 
-            <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Explore our exquisite collections of handcrafted marble masterpieces. Each piece tells a story of
-              traditional craftsmanship and timeless beauty from the heart of Makrana.
+            <p className="text-lg text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+              Immerse yourself in our curated collections of finely crafted
+              marble designs. Each piece embodies artistic mastery and an
+              unyielding commitment to quality.
             </p>
 
-            {/* Stats */}
-            <div className="flex items-center justify-center space-x-8 mb-8">
+            {/* Stats Section */}
+            <div className="flex items-center justify-center space-x-10 mb-12">
               <div className="text-center">
-                <div className="text-3xl font-bold">{categories.length}+</div>
-                <div className="text-blue-200 text-sm">Collections</div>
+                <div className="text-3xl font-bold text-white">50+</div>
+                <div className="text-gray-300 text-sm">Unique Collections</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold">500+</div>
-                <div className="text-blue-200 text-sm">Unique Pieces</div>
+                <div className="text-3xl font-bold text-white">500+</div>
+                <div className="text-gray-300 text-sm">Handcrafted Pieces</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold">15+</div>
-                <div className="text-blue-200 text-sm">Years Crafting</div>
+                <div className="text-3xl font-bold text-white">25+</div>
+                <div className="text-gray-300 text-sm">Years of Excellence</div>
               </div>
             </div>
-
-            {/* <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
-              <ArrowRight className="w-5 h-5 mr-2" />
-              Explore Collections
-            </Button> */}
           </div>
         </div>
-
-        {/* Decorative Elements */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-white/10 rounded-full animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-32 h-32 bg-white/5 rounded-full animate-pulse delay-1000"></div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-16 px-6">
+      {/* Search and Filters */}
+      <section className="py-8 px-6 bg-gray-50 border-y border-gray-200">
         <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <div className="text-center p-6 bg-white rounded-2xl shadow-lg border border-gray-100">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Award className="w-8 h-8 text-blue-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Premium Quality</h3>
-              <p className="text-gray-600">
-                Handpicked marble from the finest quarries of Makrana, ensuring exceptional quality and durability.
-              </p>
+          <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
+            {/* Search */}
+            <div className="relative flex-1 max-w-md">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Input
+                placeholder="Search collections..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 pr-4 py-2 border-gray-300 focus:border-amber-500 focus:ring-amber-500 bg-white"
+              />
             </div>
 
-            <div className="text-center p-6 bg-white rounded-2xl shadow-lg border border-gray-100">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Users className="w-8 h-8 text-green-600" />
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Expert Craftsmanship</h3>
-              <p className="text-gray-600">
-                Skilled artisans with generations of experience create each piece with meticulous attention to detail.
-              </p>
-            </div>
+            {/* Controls */}
+            <div className="flex items-center space-x-4">
+              {/* Sort */}
+              <Select
+                value={sortBy}
+                onValueChange={(value: SortOption) => setSortBy(value)}
+              >
+                <SelectTrigger className="w-40 bg-white">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="newest">Newest First</SelectItem>
+                  <SelectItem value="oldest">Oldest First</SelectItem>
+                  <SelectItem value="name">Name</SelectItem>
+                </SelectContent>
+              </Select>
 
-            <div className="text-center p-6 bg-white rounded-2xl shadow-lg border border-gray-100">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Sparkles className="w-8 h-8 text-purple-600" />
+              {/* Sort Order */}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() =>
+                  setSortOrder(sortOrder === "asc" ? "desc" : "asc")
+                }
+                className="border-gray-300 bg-white"
+              >
+                {sortOrder === "asc" ? (
+                  <SortAsc className="w-4 h-4" />
+                ) : (
+                  <SortDesc className="w-4 h-4" />
+                )}
+              </Button>
+
+              {/* View Mode */}
+              <div className="flex border border-gray-300 rounded-lg overflow-hidden bg-white">
+                <Button
+                  variant={viewMode === "grid" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("grid")}
+                  className="rounded-none bg-amber-600 hover:bg-amber-700"
+                >
+                  <Grid3X3 className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant={viewMode === "list" ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setViewMode("list")}
+                  className="rounded-none"
+                >
+                  <List className="w-4 h-4" />
+                </Button>
               </div>
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">Custom Designs</h3>
-              <p className="text-gray-600">Bespoke marble creations tailored to your vision and space requirements.</p>
+
+              {/* Results Count */}
+              <Badge
+                variant="secondary"
+                className="px-3 py-1 bg-amber-100 text-amber-800"
+              >
+                {filteredCategories.length} collections
+              </Badge>
             </div>
           </div>
         </div>
@@ -145,31 +234,86 @@ const Page = async () => {
       {/* Collections Grid */}
       <section className="py-16 px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">Our Collections</h2>
-            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Browse through our carefully curated collections, each representing the pinnacle of marble artistry.
-            </p>
-          </div>
-
-          <MasonryLayout breakpoints={{ 1500: 4, 1200: 3, 768: 2, 500: 1 }}>
-            {categories.map((category, index) => (
-              <CategoryCard key={category.id} category={category} index={index} />
-            ))}
-          </MasonryLayout>
+          {filteredCategories.length === 0 ? (
+            <div className="flex flex-col items-center justify-center text-center py-20">
+              <div className="relative mb-8">
+                <Image
+                  src="/placeholder.svg?height=200&width=300"
+                  alt="No collections found"
+                  width={300}
+                  height={200}
+                  className="opacity-50"
+                />
+              </div>
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                {searchQuery
+                  ? "No collections match your search"
+                  : "No collections available"}
+              </h2>
+              <p className="text-gray-600 mb-8 max-w-md">
+                {searchQuery
+                  ? "Try adjusting your search terms or browse all our collections."
+                  : "Check back later as we add more collections to our catalog."}
+              </p>
+              <div className="flex space-x-4">
+                {searchQuery && (
+                  <Button onClick={() => setSearchQuery("")} variant="outline">
+                    Clear Search
+                  </Button>
+                )}
+                <Button
+                  onClick={() => window.location.reload()}
+                  className="bg-amber-600 hover:bg-amber-700"
+                >
+                  Refresh Page
+                </Button>
+              </div>
+            </div>
+          ) : (
+            <>
+              {viewMode === "grid" ? (
+                <MasonryLayout
+                  breakpoints={{ 1500: 4, 1200: 3, 768: 2, 500: 1 }}
+                >
+                  {filteredCategories.map((category, index) => (
+                    <CategoryCard
+                      key={category.id}
+                      category={category}
+                      showNewBadge={index < 2}
+                    />
+                  ))}
+                </MasonryLayout>
+              ) : (
+                <div className="space-y-6">
+                  {filteredCategories.map((category, index) => (
+                    <CategoryListItem
+                      key={category.id}
+                      category={category}
+                      showNewBadge={index < 2}
+                    />
+                  ))}
+                </div>
+              )}
+            </>
+          )}
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="py-20 px-6 bg-gradient-to-r from-gray-900 to-black text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-6">Ready to Create Something Beautiful?</h2>
+          <h2 className="text-4xl font-bold mb-6">
+            Ready to Create Something Beautiful?
+          </h2>
           <p className="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
-            Let our master craftsmen bring your vision to life with premium Makrana marble. Contact us for custom
-            designs and consultations.
+            Let our master craftsmen bring your vision to life with premium
+            Makrana marble. Contact us for custom designs and consultations.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="bg-yellow-500 hover:bg-yellow-600 text-black">
+            <Button
+              size="lg"
+              className="bg-amber-600 hover:bg-amber-700 text-white"
+            >
               Get Custom Quote
             </Button>
             <Button
@@ -177,174 +321,103 @@ const Page = async () => {
               variant="outline"
               className="border-white text-white hover:bg-white hover:text-black bg-transparent"
             >
-              View Gallery
+              Contact Us
             </Button>
           </div>
         </div>
       </section>
     </div>
-  )
+  );
 }
 
-export default Page
-
-function CategoryCard({ category, index }: { category: CategoryType; index: number }) {
-  const isNew = index < 2 // Mark first 2 categories as "New" for demo
+// List view component for categories
+function CategoryListItem({
+  category,
+  showNewBadge,
+}: {
+  category: CategoryType;
+  showNewBadge: boolean;
+}) {
+  const isNew = () => {
+    if (!category.createdAt) return false;
+    const createdDate = new Date(category.createdAt);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - createdDate.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays <= 30;
+  };
 
   return (
-    <Link href={"/collections/" + category.id} className="block group">
-      <div className="relative overflow-hidden rounded-2xl shadow-lg transition-all duration-500 transform hover:scale-105 hover:shadow-2xl bg-white">
-        <div className="relative overflow-hidden">
+    <div className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+      <div className="flex">
+        <div className="relative w-48 h-32 flex-shrink-0">
           <Image
-            unoptimized={true}
             src={category.imageUrl || "/placeholder.svg"}
             alt={category.name}
-            width={600}
-            height={400}
-            className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110"
+            fill
+            className="object-cover"
           />
-
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
-
-          {/* Badges */}
-          <div className="absolute top-4 left-4 flex flex-col space-y-2">
-            {isNew && (
-              <Badge className="bg-green-500 hover:bg-green-600">
-                <Sparkles className="w-3 h-3 mr-1" />
-                New
-              </Badge>
-            )}
-            {/* <Badge className="bg-blue-500 hover:bg-blue-600">Premium</Badge> */}
-          </div>
-
-          {/* Content */}
-          <div className="absolute bottom-0 left-0 right-0 p-6">
-            <h3 className="text-white text-xl font-bold capitalize mb-2 group-hover:text-yellow-300 transition-colors">
+          {showNewBadge && isNew() && (
+            <Badge className="absolute top-2 left-2 bg-green-500 hover:bg-green-600">
+              <Sparkles className="w-3 h-3 mr-1" />
+              New
+            </Badge>
+          )}
+        </div>
+        <div className="flex-1 p-6 flex items-center justify-between">
+          <div>
+            <h3 className="text-xl font-bold text-gray-900 capitalize mb-2">
               {category.name}
             </h3>
-            <p className="text-gray-200 text-sm mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              Discover exquisite {category.name.toLowerCase()} pieces crafted with precision and artistry.
+            <p className="text-gray-600">
+              Discover exquisite {category.name.toLowerCase()} pieces
             </p>
-
-            {/* View Collection Button */}
-            <div className="flex items-center text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
-              <span className="text-sm font-medium mr-2">View Collection</span>
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </div>
           </div>
+          <Button className="bg-amber-600 hover:bg-amber-700">
+            <ArrowRight className="w-4 h-4 mr-2" />
+            View Collection
+          </Button>
         </div>
+      </div>
+    </div>
+  );
+}
 
-        {/* Bottom Info */}
-        <div className="p-4 bg-white">
-          <div className="flex items-center justify-between">
-            <span className="text-gray-600 text-sm">Premium Collection</span>
-            <div className="flex items-center space-x-1">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span className="text-xs text-gray-500">Available</span>
-            </div>
+// Loading skeleton component
+function LoadingSkeleton() {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <div className="bg-gray-900 pt-24 pb-16">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-700 rounded-full w-32 mx-auto mb-6"></div>
+            <div className="h-16 bg-gray-700 rounded w-96 mx-auto mb-6"></div>
+            <div className="h-6 bg-gray-700 rounded w-2/3 mx-auto mb-8"></div>
           </div>
         </div>
       </div>
-    </Link>
-  )
+
+      <div className="py-16 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            {[...Array(3)].map((_, i) => (
+              <div key={i} className="animate-pulse">
+                <div className="h-32 bg-gray-200 rounded-2xl mb-4"></div>
+              </div>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, i) => (
+              <div key={i} className="animate-pulse">
+                <div className="h-64 bg-gray-200 rounded-xl mb-4"></div>
+                <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
-
-
-// import MasonryLayout from "@/components/masonry-layout";
-// import { getCategories } from "@/lib/actions";
-// import { CategoryType } from "@/lib/types";
-// import { Metadata } from "next";
-// import Image from "next/image";
-// import Link from "next/link";
-// import React from "react";
-
-// export const metadata: Metadata = {
-//   title: "Marble Handicraft Collections",
-//   description:
-//     "Explore the exquisite collections of marble handicrafts at Makrana Premium. Discover unique and beautifully crafted marble art pieces, sculptures, decor, and more.",
-//   keywords: [
-//     "white marble",
-//     "Makrana marble",
-//     "marble handicrafts",
-//     "premium marble",
-//     "marble design collection",
-//     "marble artistry",
-//     "marble traditional crafts",
-//     "marble souvenirs",
-//     "unique marble items",
-//     "marble collections",
-//     "premium marble items",
-//     "handcrafted marble",
-//     "marble design collections",
-//     "marble slabs collection",
-//     "marble slabs",
-//     "white marble slabs",
-//   ],
-//   openGraph: {
-//     title: "Makrana Premium - Marble Handicraft Collections",
-//     description:
-//       "Explore the exquisite collections of marble handicrafts at Makrana Premium. Discover unique and beautifully crafted marble art pieces, sculptures, decor, and more.",
-//     images: {
-//       url: "/ogImage.png",
-//     },
-//     url: "https://www.makranapremium.com/collections",
-//   },
-//   twitter: {
-//     card: "summary_large_image",
-//     title: "Makrana Premium - Marble Handicrafts Collections",
-//     description:
-//       "Explore the exquisite collections of marble handicrafts at Makrana Premium. Discover unique and beautifully crafted marble art pieces, sculptures, decor, and more.",
-//     images: {
-//       url: "/ogImage.png",
-//     },
-//   },
-// };
-
-// export const dynamic = 'auto'
-
-// const Page = async () => {
-//   const { categories } = await getCategories();
-
-//   return (
-//     <div className="py-20 container mx-auto px-6">
-//       <h1 className="text-center text-2xl sm:text-3xl md:text-4xl font-bold text-charcoalBlack dark:text-champagneGold mb-10">
-//         Discover Marble Elegance
-//       </h1>
-//       <MasonryLayout breakpoints={{ 1500: 4, 500: 2 }}>
-//         {categories.map((category) => (
-//           <CategoryCard key={category.id} category={category} />
-//         ))}
-//       </MasonryLayout>
-//     </div>
-//   );
-// };
-
-// export default Page;
-
-// function CategoryCard({ category }: { category: CategoryType }) {
-//   return (
-//     <Link
-//       href={"/collections/" + category.id}
-//       key={category.id}
-//       className="block"
-//     >
-//       <div className="relative overflow-hidden rounded-lg shadow-lg transition-transform duration-300 hover:scale-105">
-//         <Image
-//           unoptimized={true}
-//           src={category.imageUrl || ""}
-//           alt={category.name}
-//           width={600}
-//           height={400}
-//           className="w-full object-cover rounded-lg"
-//           style={{ filter: "none" }} // Prevents inversion in dark mode
-//         />
-//         <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-//           <h3 className="text-white text-lg sm:text-xl md:text-2xl text-softBeige font-bold capitalize">
-//             {category.name}
-//           </h3>
-//         </div>
-//       </div>
-//     </Link>
-//   );
-// }

@@ -1,3 +1,4 @@
+import { apiDefaults } from "@/lib/constant";
 import { connectDB } from "@/lib/db";
 import { Product } from "@/lib/models";
 import { MongooseError } from "mongoose";
@@ -15,10 +16,10 @@ export async function GET(req: NextRequest) {
     const page = Number(searchParams.get("page"));
 
     const products = await Product.find(categoryId ? { categoryId } : {})
-      .skip(page ? (page - 1) * 20 : 0)
+      .skip(page > 1 ? (page - 1) * apiDefaults.limit : 0)
       .sort({ createdAt: -1 })
-      .populate(["categoryId"], ["id", "name"]);
-
+      .populate(["categoryId"], ["id", "name"])
+      .limit(apiDefaults.limit);
     return NextResponse.json(
       {
         products,
