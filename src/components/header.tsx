@@ -93,7 +93,6 @@ export default function Header() {
           <Link href="/" className="flex items-center space-x-3 group">
             <div className="relative">
               <Image
-                unoptimized={true}
                 className="rounded-full aspect-square w-12 h-12 group-hover:scale-110 transition-transform duration-300"
                 src="/logo.png"
                 alt="Makrana Premium"

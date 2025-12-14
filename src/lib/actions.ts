@@ -39,7 +39,7 @@ export async function getProducts(
             ? { [sortBy]: 1 }
             : orderBy
             ? { createdAt: orderBy }
-            : { createdAt: -1 }
+            : { createdAt: "desc" }
         )
         .populate(["categoryId"], ["id", "name"])
     )

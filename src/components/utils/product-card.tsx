@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 "use client"
 
 import { useState } from "react"
@@ -5,15 +6,31 @@ import Image from "next/image"
 import type { ProductType } from "@/lib/types"
 import { Card } from "@/components/ui/card"
 import { Eye, X } from "lucide-react"
+=======
+"use client";
+
+import { useState } from "react";
+import Image from "next/image";
+import type { ProductType } from "@/lib/types";
+import { Card } from "@/components/ui/card";
+import { Eye, X } from "lucide-react";
+>>>>>>> 3515199 (updated infinite product loading)
 
 export default function ProductCard({
   product,
   listView = false,
 }: {
+<<<<<<< HEAD
   product: ProductType
   listView?: boolean
 }) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
+=======
+  product: ProductType;
+  listView?: boolean;
+}) {
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+>>>>>>> 3515199 (updated infinite product loading)
 
   if (listView) {
     return (
@@ -31,8 +48,17 @@ export default function ProductCard({
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
             </div>
             <div className="flex-1 p-6 flex flex-col justify-center">
+<<<<<<< HEAD
               <h3 className="text-xl font-bold text-gray-900 mb-2 capitalize">{product.name}</h3>
               <p className="text-amber-600 capitalize font-medium">{product.categoryId.name}</p>
+=======
+              <h3 className="text-xl font-bold text-gray-900 mb-2 capitalize">
+                {product.name}
+              </h3>
+              <p className="text-amber-600 capitalize font-medium">
+                {product.categoryId.name}
+              </p>
+>>>>>>> 3515199 (updated infinite product loading)
             </div>
           </div>
         </Card>
@@ -45,7 +71,11 @@ export default function ProductCard({
           />
         )}
       </>
+<<<<<<< HEAD
     )
+=======
+    );
+>>>>>>> 3515199 (updated infinite product loading)
   }
 
   return (
@@ -79,7 +109,13 @@ export default function ProductCard({
             <h3 className="font-bold text-lg text-white mb-1 capitalize line-clamp-2 group-hover:text-amber-300 transition-colors">
               {product.name}
             </h3>
+<<<<<<< HEAD
             <p className="text-sm text-amber-300 capitalize font-medium">{product.categoryId.name}</p>
+=======
+            <p className="text-sm text-amber-300 capitalize font-medium">
+              {product.categoryId.name}
+            </p>
+>>>>>>> 3515199 (updated infinite product loading)
           </div>
         </div>
       </Card>
@@ -92,14 +128,23 @@ export default function ProductCard({
         />
       )}
     </>
+<<<<<<< HEAD
   )
 }
 
+=======
+  );
+}
+
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+
+>>>>>>> 3515199 (updated infinite product loading)
 function ImageModal({
   src,
   alt,
   onClose,
 }: {
+<<<<<<< HEAD
   src: string
   alt: string
   onClose: () => void
@@ -112,10 +157,29 @@ function ImageModal({
       <div className="relative max-w-4xl w-full">
         <button
           className="absolute -top-12 right-0 z-10 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg transition-colors duration-300"
+=======
+  src: string;
+  alt: string;
+  onClose: () => void;
+}) {
+  return (
+    <div
+      className="fixed inset-0 bg-black/90 backdrop-blur-sm z-50 flex items-center justify-center"
+      onClick={onClose}
+    >
+      <div
+        className="relative w-full h-full flex items-center justify-center"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Close Button */}
+        <button
+          className="absolute top-4 right-4 z-20 bg-white/90 hover:bg-white rounded-full p-2 shadow-lg"
+>>>>>>> 3515199 (updated infinite product loading)
           onClick={onClose}
         >
           <X className="w-4 h-4" />
         </button>
+<<<<<<< HEAD
         <div className="relative">
           <Image
             src={src || "/placeholder.svg"}
@@ -134,3 +198,40 @@ function ImageModal({
     </div>
   )
 }
+=======
+
+        <TransformWrapper
+          initialScale={1}
+          minScale={1}
+          maxScale={4}
+          doubleClick={{ mode: "toggle" }}
+          pinch={{ step: 5 }}
+          panning={{ velocityDisabled: true }}
+          wheel={{
+            disabled: false,
+            wheelDisabled: true, // prevents normal wheel zoom
+            touchPadDisabled: true,
+            activationKeys: ["Control"], // 🔥 CTRL + scroll
+          }}
+        >
+          <TransformComponent>
+            <Image
+              src={src || "/placeholder.svg"}
+              alt={alt}
+              width={1200}
+              height={1200}
+              className="max-h-[90vh] w-auto object-contain select-none"
+              draggable={false}
+            />
+          </TransformComponent>
+        </TransformWrapper>
+
+        {/* Title Overlay */}
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+          <h3 className="text-white text-xl font-bold capitalize">{alt}</h3>
+        </div>
+      </div>
+    </div>
+  );
+}
+>>>>>>> 3515199 (updated infinite product loading)

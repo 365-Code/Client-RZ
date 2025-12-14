@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Fragment } from "react";
 import Image from "next/image";
 import type { ProductType } from "@/lib/types";
 import { Button } from "@/components/ui/button";
@@ -102,7 +102,8 @@ export default function Products({
     setIsLoading(true);
     try {
       const { products: newProducts } = await fetchProducts(ctg, page + 1);
-      if (products) {
+      if (newProducts) {
+        console.log(products, newProducts)
         setProducts((prev) => [...prev, ...newProducts]);
         setPage((prev) => prev + 1);
       }
@@ -132,6 +133,21 @@ export default function Products({
     return () => observer.disconnect();
   }, [isLoading, products.length, productCount]);
 
+  const navList = [
+    {
+      link: "/",
+      content: <Home size={"20px"} />,
+    },
+    {
+      link: "/collections",
+      content: "Collections",
+    },
+    {
+      link: products[0]?.categoryId.id || "Products",
+      content: categoryName
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
@@ -142,23 +158,14 @@ export default function Products({
           <nav className="flex items-center space-x-2 text-gray-300 mb-8">
             <Breadcrumb>
               <BreadcrumbList>
-                <BreadcrumbItem>
-                  <BreadcrumbLink>
-                    <Home size={"20px"} />
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink href="/collections">
-                    Collections
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  <BreadcrumbLink href={"/collections/" + ctg}>
-                    {categoryName}
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
+                {navList.map((n, i) => (
+                  <Fragment key={i}>
+                    <BreadcrumbItem key={i}>
+                      <BreadcrumbLink href={n.link} className="hover:text-white">{n.content}</BreadcrumbLink>
+                    </BreadcrumbItem>
+                    {i < navList.length - 1 && <BreadcrumbSeparator />}
+                  </Fragment>
+                ))}
               </BreadcrumbList>
             </Breadcrumb>
           </nav>
@@ -358,8 +365,8 @@ export default function Products({
               <div className="text-center py-12">
                 <div className="inline-flex items-center space-x-2 bg-gray-100 rounded-full px-6 py-3">
                   <span className="text-gray-600">
-                    <PartyPopper /> You&apos;ve seen all products in this
-                    category!
+                    <PartyPopper className="inline" /> You&apos;ve seen all
+                    products in this category!
                   </span>
                 </div>
               </div>
