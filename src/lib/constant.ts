@@ -1,3 +1,5 @@
+import { Award, Clock, Gem, Users } from "lucide-react";
+
 export const apiDefaults = {
   limit: 12,
   sortMapping: {
@@ -67,3 +69,30 @@ export const staticCategories = [
     id: "67e3d5743b533a116b99d6ad",
   },
 ];
+
+export const stats = [
+    {
+      icon: Users,
+      number: "1000+",
+      label: "Happy Clients",
+      description: "Trusted by homeowners and architects",
+    },
+    {
+      icon: Award,
+      number: "25+",
+      label: "Years Experience",
+      description: "Decades of marble craftsmanship",
+    },
+    {
+      icon: Gem,
+      number: "500+",
+      label: "Projects Completed",
+      description: "From residential to commercial",
+    },
+    {
+      icon: Clock,
+      number: "24/7",
+      label: "Expert Support",
+      description: "Always here to help you",
+    },
+  ]

@@ -1,32 +1,8 @@
+import { stats } from "@/lib/constant"
 import { Award, Users, Clock, Gem } from "lucide-react"
 
 const Stats = () => {
-  const stats = [
-    {
-      icon: Users,
-      number: "1000+",
-      label: "Happy Clients",
-      description: "Trusted by homeowners and architects",
-    },
-    {
-      icon: Award,
-      number: "25+",
-      label: "Years Experience",
-      description: "Decades of marble craftsmanship",
-    },
-    {
-      icon: Gem,
-      number: "500+",
-      label: "Projects Completed",
-      description: "From residential to commercial",
-    },
-    {
-      icon: Clock,
-      number: "24/7",
-      label: "Expert Support",
-      description: "Always here to help you",
-    },
-  ]
+  
 
   return (
     <section className="py-12 sm:py-16 lg:py-20 bg-gradient-to-b from-gray-50 to-white">

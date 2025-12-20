@@ -100,7 +100,7 @@ const About = () => {
                 src="/about.jpg"
                 alt="Marble Handicraft"
                 width={600}
-                height={600}
+                height={520}
                 className="w-full h-[280px] sm:h-[400px] lg:h-[520px] object-cover"
                 priority
               />

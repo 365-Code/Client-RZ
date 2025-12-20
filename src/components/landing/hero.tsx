@@ -15,7 +15,6 @@ const Hero = () => {
           src="/bg.jpg?height=1080&width=1920"
           alt="Luxury Marble Showroom"
           fill
-          className="object-cover"
           priority
           quality={90}
         />

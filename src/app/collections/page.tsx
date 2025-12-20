@@ -291,7 +291,7 @@ export default function CollectionsPage() {
                   // >
                   //   </MasonryLayout>
 
-                  <div className="grid gap-4 grid-cols-1 min-[500]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                  <div className="grid gap-4 grid-cols-1 min-[540]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
                     {filteredCategories.map((category, index) => (
                       <CategoryCard
                         key={category.id}

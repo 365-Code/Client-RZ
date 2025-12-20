@@ -1,12 +1,14 @@
+import dynamic from "next/dynamic";
 import Hero from "@/components/landing/hero";
 import About from "@/components/landing/about";
-import { ShopProducts } from "@/components/landing/gallery";
-import Article from "@/components/landing/article";
-import ContactUs from "@/components/landing/contact-us";
-import WhatsAppContact from "@/components/utils/whatsapp";
 import Stats from "@/components/landing/stats";
-import Testimonials from "@/components/landing/testimonials";
-import Process from "@/components/landing/process";
+
+const ShopProducts = dynamic(() => import("@/components/landing/gallery"));
+const Process = dynamic(() => import("@/components/landing/process"));
+const Testimonials = dynamic(() => import("@/components/landing/testimonials"));
+const ContactUs = dynamic(() => import("@/components/landing/contact-us"));
+const WhatsAppContact = dynamic(() => import("@/components/utils/whatsapp"));
+
 
 const page = () => {
   return (
@@ -16,7 +18,6 @@ const page = () => {
       <About />
       <ShopProducts />
       <Process />
-      {/* <Article /> */}
       <Testimonials />
       <ContactUs />
       <WhatsAppContact />

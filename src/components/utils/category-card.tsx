@@ -37,8 +37,7 @@ export default function CategoryCard({
             className="
               w-full
               object-cover
-              max-h-[420px]
-              sm:max-h-[360px]
+              min-[540]:h-64
               transition-transform duration-500
               group-hover:scale-105
             "

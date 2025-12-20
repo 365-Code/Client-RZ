@@ -5,7 +5,7 @@ import { ArrowRight, Award, Sparkles, Users } from "lucide-react";
 import { staticCategories } from "@/lib/constant";
 import CategoryCard from "../utils/category-card";
 
-export const ShopProducts = () => {
+const ShopProducts = () => {
   return (
     <section
       id="gallery"
@@ -72,22 +72,19 @@ export const ShopProducts = () => {
               {
                 icon: Award,
                 title: "Premium Quality",
-                text:
-                  "Handpicked marble from the finest quarries of Makrana, ensuring exceptional quality.",
+                text: "Handpicked marble from the finest quarries of Makrana, ensuring exceptional quality.",
                 color: "blue",
               },
               {
                 icon: Users,
                 title: "Expert Craftsmanship",
-                text:
-                  "Skilled artisans with generations of experience and attention to detail.",
-                color: "yellow",
+                text: "Skilled artisans with generations of experience and attention to detail.",
+                color: "green",
               },
               {
                 icon: Sparkles,
                 title: "Custom Designs",
-                text:
-                  "Bespoke marble creations tailored to your vision and space.",
+                text: "Bespoke marble creations tailored to your vision and space.",
                 color: "amber",
               },
             ].map(({ icon: Icon, title, text, color }) => (
@@ -103,9 +100,7 @@ export const ShopProducts = () => {
                 <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-2">
                   {title}
                 </h3>
-                <p className="text-sm sm:text-base text-gray-600">
-                  {text}
-                </p>
+                <p className="text-sm sm:text-base text-gray-600">{text}</p>
               </div>
             ))}
           </div>
@@ -137,5 +132,7 @@ export const ShopProducts = () => {
         </div>
       </div>
     </section>
-  )
-}
+  );
+};
+
+export default ShopProducts;
