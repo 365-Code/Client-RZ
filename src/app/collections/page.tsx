@@ -94,10 +94,6 @@ export default function CollectionsPage() {
     setFilteredCategories(filtered);
   }, [categories, searchQuery, sortBy, sortOrder]);
 
-  if (isLoading) {
-    return <LoadingSkeleton />;
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
@@ -114,37 +110,49 @@ export default function CollectionsPage() {
           <div className="text-center">
             <div className="inline-flex items-center space-x-2 bg-indigo-600/20 backdrop-blur-sm rounded-full px-6 py-3 mb-8">
               <Sparkles className="w-5 h-5 text-indigo-400" />
-              <span className="text-lg font-medium text-indigo-300">
+              <span className="text-sm sm:text-lg font-medium text-indigo-300">
                 Explore Our Collections
               </span>
             </div>
 
-            <h1 className="text-4xl lg:text-5xl font-semibold mb-6 leading-tight">
+            <h1 className="text-2xl sm:text-4xl lg:text-5xl font-semibold mb-6 leading-tight">
               Discover Timeless
               <span className="block text-transparent bg-clip-text bg-gradient-to-l from-indigo-400 to-pink-400">
                 Marble Creations
               </span>
             </h1>
 
-            <p className="text-lg text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-sm text-ellipsis sm:text-lg text-gray-300 mb-10 max-w-3xl mx-auto leading-relaxed">
               Immerse yourself in our curated collections of finely crafted
               marble designs. Each piece embodies artistic mastery and an
               unyielding commitment to quality.
             </p>
 
             {/* Stats Section */}
-            <div className="flex items-center justify-center space-x-10 mb-12">
+            <div className="flex items-center justify-center gap-8 mb-12">
               <div className="text-center">
-                <div className="text-3xl font-bold text-white">50+</div>
-                <div className="text-gray-300 text-sm">Unique Collections</div>
+                <div className="text-2xl sm:text-3xl font-bold text-white">
+                  50+
+                </div>
+                <div className="text-gray-300 text-xs sm:text-sm">
+                  Unique Collections
+                </div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-white">500+</div>
-                <div className="text-gray-300 text-sm">Handcrafted Pieces</div>
+                <div className="text-2xl sm:text-3xl font-bold text-white">
+                  500+
+                </div>
+                <div className="text-gray-300 text-xs sm:text-sm">
+                  Handcrafted Pieces
+                </div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-white">25+</div>
-                <div className="text-gray-300 text-sm">Years of Excellence</div>
+                <div className="text-2xl sm:text-3xl font-bold text-white">
+                  25+
+                </div>
+                <div className="text-gray-300 text-xs sm:text-sm">
+                  Years of Excellence
+                </div>
               </div>
             </div>
           </div>
@@ -167,7 +175,7 @@ export default function CollectionsPage() {
             </div>
 
             {/* Controls */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center flex-wrap gap-2">
               {/* Sort */}
               <Select
                 value={sortBy}
@@ -232,72 +240,82 @@ export default function CollectionsPage() {
       </section>
 
       {/* Collections Grid */}
-      <section className="py-16 px-6">
-        <div className="max-w-7xl mx-auto">
-          {filteredCategories.length === 0 ? (
-            <div className="flex flex-col items-center justify-center text-center py-20">
-              <div className="relative mb-8">
-                <Image
-                  src="/placeholder.svg?height=200&width=300"
-                  alt="No collections found"
-                  width={300}
-                  height={200}
-                  className="opacity-50"
-                />
-              </div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                {searchQuery
-                  ? "No collections match your search"
-                  : "No collections available"}
-              </h2>
-              <p className="text-gray-600 mb-8 max-w-md">
-                {searchQuery
-                  ? "Try adjusting your search terms or browse all our collections."
-                  : "Check back later as we add more collections to our catalog."}
-              </p>
-              <div className="flex space-x-4">
-                {searchQuery && (
-                  <Button onClick={() => setSearchQuery("")} variant="outline">
-                    Clear Search
-                  </Button>
-                )}
-                <Button
-                  onClick={() => window.location.reload()}
-                  className="bg-amber-600 hover:bg-amber-700"
-                >
-                  Refresh Page
-                </Button>
-              </div>
-            </div>
-          ) : (
-            <>
-              {viewMode === "grid" ? (
-                <MasonryLayout
-                  breakpoints={{ 1500: 4, 1200: 3, 768: 2, 500: 1 }}
-                >
-                  {filteredCategories.map((category, index) => (
-                    <CategoryCard
-                      key={category.id}
-                      category={category}
-                      showNewBadge={index < 2}
-                    />
-                  ))}
-                </MasonryLayout>
-              ) : (
-                <div className="space-y-6">
-                  {filteredCategories.map((category, index) => (
-                    <CategoryListItem
-                      key={category.id}
-                      category={category}
-                      showNewBadge={index < 2}
-                    />
-                  ))}
+      {isLoading ? (
+        <LoadingSkeleton />
+      ) : (
+        <section className="py-16 px-6">
+          <div className="max-w-7xl mx-auto">
+            {filteredCategories.length === 0 ? (
+              <div className="flex flex-col items-center justify-center text-center py-20">
+                <div className="relative mb-8">
+                  <Image
+                    src="/empty-box.svg?height=200&width=300"
+                    alt="No collections found"
+                    width={300}
+                    height={200}
+                    className="opacity-50"
+                  />
                 </div>
-              )}
-            </>
-          )}
-        </div>
-      </section>
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">
+                  {searchQuery
+                    ? "No collections match your search"
+                    : "No collections available"}
+                </h2>
+                <p className="text-gray-600 mb-8 max-w-md">
+                  {searchQuery
+                    ? "Try adjusting your search terms or browse all our collections."
+                    : "Check back later as we add more collections to our catalog."}
+                </p>
+                <div className="flex space-x-4">
+                  {searchQuery && (
+                    <Button
+                      onClick={() => setSearchQuery("")}
+                      variant="outline"
+                    >
+                      Clear Search
+                    </Button>
+                  )}
+                  <Button
+                    onClick={() => window.location.reload()}
+                    className="bg-amber-600 hover:bg-amber-700"
+                  >
+                    Refresh Page
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <>
+                {viewMode === "grid" ? (
+                  // <MasonryLayout
+                  //   breakpoints={{ 1500: 4, 1200: 3, 800: 2, 500: 1, default: 1 }}
+                  // >
+                  //   </MasonryLayout>
+
+                  <div className="grid gap-4 grid-cols-1 min-[500]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+                    {filteredCategories.map((category, index) => (
+                      <CategoryCard
+                        key={category.id}
+                        category={category}
+                        showNewBadge={index < 2}
+                      />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="space-y-6">
+                    {filteredCategories.map((category, index) => (
+                      <CategoryListItem
+                        key={category.id}
+                        category={category}
+                        showNewBadge={index < 2}
+                      />
+                    ))}
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        </section>
+      )}
 
       {/* CTA Section */}
       <section className="py-20 px-6 bg-gradient-to-r from-gray-900 to-black text-white">
@@ -330,7 +348,6 @@ export default function CollectionsPage() {
   );
 }
 
-// List view component for categories
 function CategoryListItem({
   category,
   showNewBadge,
@@ -383,36 +400,17 @@ function CategoryListItem({
   );
 }
 
-// Loading skeleton component
 function LoadingSkeleton() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      <div className="bg-gray-900 pt-24 pb-16">
-        <div className="max-w-7xl mx-auto px-6 text-center">
-          <div className="animate-pulse">
-            <div className="h-8 bg-gray-700 rounded-full w-32 mx-auto mb-6"></div>
-            <div className="h-16 bg-gray-700 rounded w-96 mx-auto mb-6"></div>
-            <div className="h-6 bg-gray-700 rounded w-2/3 mx-auto mb-8"></div>
-          </div>
-        </div>
-      </div>
-
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white max-w-7xl">
       <div className="py-16 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            {[...Array(3)].map((_, i) => (
-              <div key={i} className="animate-pulse">
-                <div className="h-32 bg-gray-200 rounded-2xl mb-4"></div>
-              </div>
-            ))}
-          </div>
-
+        <div className="max-w-screen mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[...Array(6)].map((_, i) => (
               <div key={i} className="animate-pulse">
-                <div className="h-64 bg-gray-200 rounded-xl mb-4"></div>
-                <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                <div className="h-64 bg-gray-200 rounded-xl mb-4" />
+                <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+                <div className="h-4 bg-gray-200 rounded w-1/2" />
               </div>
             ))}
           </div>

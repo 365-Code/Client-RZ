@@ -9,60 +9,71 @@ interface CategoryCardProps {
   showNewBadge?: boolean
 }
 
-export default function CategoryCard({ category, showNewBadge = false }: CategoryCardProps) {
-  // Check if category is new (created within last 30 days)
+export default function CategoryCard({
+  category,
+  showNewBadge = false,
+}: CategoryCardProps) {
   const isNew = () => {
     if (!category.createdAt) return false
     const createdDate = new Date(category.createdAt)
     const now = new Date()
-    const diffTime = Math.abs(now.getTime() - createdDate.getTime())
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    return diffDays <= 30
+    return (
+      Math.abs(now.getTime() - createdDate.getTime()) /
+        (1000 * 60 * 60 * 24) <=
+      30
+    )
   }
 
   return (
-    <Link href={"/collections/" + category.id} className="block group">
-      <div className="relative overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-white">
+    <Link href={`/collections/${category.id}`} className="group block">
+      <div className="rounded-2xl bg-white border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden">
+        {/* Image */}
         <div className="relative overflow-hidden">
           <Image
-            unoptimized
             src={category.imageUrl || "/placeholder.svg"}
             alt={category.name}
             width={600}
             height={400}
-            className="w-full h-64 object-cover transition-transform duration-700 group-hover:scale-110"
+            className="
+              w-full
+              object-cover
+              max-h-[420px]
+              sm:max-h-[360px]
+              transition-transform duration-500
+              group-hover:scale-105
+            "
           />
 
-          {/* Gradient Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300"></div>
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
 
-          {/* New Badge - Only show if showNewBadge is true AND category is actually new */}
+          {/* Badge */}
           {showNewBadge && isNew() && (
-            <div className="absolute top-4 left-4">
-              <Badge className="bg-green-500 hover:bg-green-600 shadow-lg">
+            <div className="absolute top-3 left-3 sm:top-4 sm:left-4">
+              <Badge className="bg-amber-500 text-white px-2 py-1 text-xs shadow-md">
                 <Sparkles className="w-3 h-3 mr-1" />
                 New
               </Badge>
             </div>
           )}
 
-          {/* Content */}
-          <div className="absolute bottom-0 left-0 right-0 p-6">
-            <h3 className="text-white text-xl font-bold capitalize mb-2 group-hover:text-amber-300 transition-colors">
+          {/* Text on Image */}
+          <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
+            <h3 className="text-white text-base sm:text-lg font-semibold capitalize">
               {category.name}
             </h3>
-            <p className="text-gray-200 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              Discover exquisite {category.name.toLowerCase()} pieces
+            <p className="text-xs sm:text-sm text-gray-200">
+              Handcrafted marble collection
             </p>
           </div>
         </div>
 
-        {/* Bottom Info */}
-        <div className="p-4 bg-white">
-          <div className="flex items-center justify-between">
-            <span className="text-gray-600 text-sm capitalize">{category.name}</span>
-            <ArrowRight className="w-4 h-4 text-amber-600 group-hover:translate-x-1 transition-transform" />
-          </div>
+        {/* Bottom */}
+        <div className="p-4 sm:p-5 flex items-center justify-between">
+          <span className="text-sm sm:text-base font-medium text-gray-800">
+            View Collection
+          </span>
+          <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 text-amber-600 group-hover:translate-x-1 transition-transform" />
         </div>
       </div>
     </Link>

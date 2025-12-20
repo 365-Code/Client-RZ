@@ -18,20 +18,22 @@ export default function ProductCard({
   if (listView) {
     return (
       <>
-        <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-200 bg-white p-0">
+        <Card
+          className="overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-200 bg-white p-0"
+          onClick={() => setSelectedImage(product.imageUrl)}
+        >
           <div className="flex">
-            <div className="relative w-48 h-48 flex-shrink-0">
+            <div className="relative w-48 flex-shrink-0 flex-1/3">
               <Image
                 src={product.imageUrl || "/placeholder.svg"}
                 alt={product.name}
                 fill
                 className="object-cover cursor-pointer hover:scale-105 transition-transform duration-300"
-                onClick={() => setSelectedImage(product.imageUrl)}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
             </div>
-            <div className="flex-1 p-6 flex flex-col justify-center">
-              <h3 className="text-xl font-bold text-gray-900 mb-2 capitalize">
+            <div className="flex-2/3 p-6 flex flex-col justify-center">
+              <h3 className="sm:text-xl font-bold text-gray-900 mb-2 capitalize">
                 {product.name}
               </h3>
               <p className="text-amber-600 capitalize font-medium">
@@ -54,7 +56,10 @@ export default function ProductCard({
 
   return (
     <>
-      <Card className="group overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-0 bg-white p-0 relative">
+      <Card
+        className="group overflow-hidden hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border-0 bg-white p-0 relative"
+        onClick={() => setSelectedImage(product.imageUrl)}
+      >
         {/* Full Background Image */}
         <div className="relative aspect-square">
           <Image
@@ -62,7 +67,6 @@ export default function ProductCard({
             alt={product.name}
             fill
             className="object-cover cursor-pointer transition-transform duration-500 group-hover:scale-110"
-            onClick={() => setSelectedImage(product.imageUrl)}
           />
 
           {/* Gradient Overlay for Text Readability */}
