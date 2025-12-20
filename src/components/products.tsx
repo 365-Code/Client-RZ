@@ -354,7 +354,7 @@ export default function Products({
               <div className="text-center py-6 sm:py-12">
                 <div className="inline-flex items-center space-x-2 bg-gray-100 rounded-full px-4 sm:px-6 py-2 sm:py-3">
                   <span className="text-gray-600">
-                    <PartyPopper className="inline" /> You've seen all products
+                    <PartyPopper className="inline" /> You&apos;ve seen all products
                     in this category!
                   </span>
                 </div>

@@ -1,5 +1,5 @@
-
-import { Loader2, Package, ShoppingBag, Sparkles } from "lucide-react"
+import { Loader2, Package, ShoppingBag, Sparkles } from "lucide-react";
+import Image from "next/image";
 
 const Loading = () => {
   return (
@@ -9,7 +9,9 @@ const Loading = () => {
         <div className="text-center mb-16">
           <div className="relative inline-block mb-8">
             <div className="relative">
-              <img
+              <Image
+                width={400}
+                height={300}
                 src="/loading.svg?height=300&width=400"
                 alt="Loading products"
                 className="w-80 h-60 mx-auto opacity-90"
@@ -34,9 +36,12 @@ const Loading = () => {
           </div>
 
           <div className="space-y-4 mb-8">
-            <h1 className="text-4xl font-bold text-gray-900">Curating Amazing Products</h1>
+            <h1 className="text-4xl font-bold text-gray-900">
+              Curating Amazing Products
+            </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              We&apos;re handpicking the best products just for you. This won&apos;t take long!
+              We&apos;re handpicking the best products just for you. This
+              won&apos;t take long!
             </p>
           </div>
 
@@ -85,17 +90,18 @@ const Loading = () => {
           ))}
         </div>
 
-
         {/* Fun Loading Messages */}
         <div className="text-center mt-12">
           <div className="inline-flex items-center space-x-2 bg-white rounded-full px-6 py-3 shadow-lg border border-gray-100">
             <div className="w-2 h-2 bg-blue-600 rounded-full animate-ping"></div>
-            <p className="text-sm text-gray-600 font-medium">Almost there... preparing your shopping experience</p>
+            <p className="text-sm text-gray-600 font-medium">
+              Almost there... preparing your shopping experience
+            </p>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Loading
+export default Loading;
