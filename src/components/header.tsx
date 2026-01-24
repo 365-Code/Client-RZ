@@ -2,34 +2,18 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, X, Phone, Mail, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { navSections } from "@/lib/constant";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [collectionsOpen, setCollectionsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
-
-  const sections = [
-    { name: "home", url: "/" },
-    { name: "about", url: "/about" },
-    {
-      name: "collections",
-      url: "/collections",
-      hasDropdown: true,
-      dropdownItems: [
-        { name: "Makrana White", url: "/collections/makrana-white" },
-        { name: "Italian Marble", url: "/collections/italian" },
-        { name: "Indian Marble", url: "/collections/indian" },
-        { name: "Granite", url: "/collections/granite" },
-      ],
-    },
-    { name: "contact us", url: "/contact" },
-  ];
 
   useEffect(() => {
     if (typeof window !== "undefined" && menuOpen) {
@@ -39,15 +23,17 @@ export default function Header() {
     }
   }, [menuOpen]);
 
-  // Track scroll position
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const handleScroll = () => {
-        setIsScrolled(window.scrollY > 50);
-      };
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
-    }
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Intersection Observer for active sections
@@ -66,7 +52,7 @@ export default function Header() {
       });
     }, options);
 
-    sections.forEach((section) => {
+    navSections.forEach((section) => {
       const element = document.getElementById(section.name);
       if (element) observer.observe(element);
     });
@@ -76,16 +62,18 @@ export default function Header() {
 
   const isHomePage = pathname === "/";
 
+  if(!mounted) return null
+
   return (
     <>
       {/* Main Header */}
       <header
-        className={`w-full top-0 left-0 z-50 transition-all duration-300 ${
+        className={`w-full max-w-screen top-0 left-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "fixed bg-white/95 backdrop-blur-md shadow-lg"
+            ? "fixed bg-white/50 backdrop-blur-md shadow-lg"
             : isHomePage
-            ? "absolute bg-transparent"
-            : "absolute bg-white/90 backdrop-blur-sm"
+              ? "absolute bg-transparent"
+              : "absolute bg-white/90 backdrop-blur-sm"
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
@@ -121,7 +109,7 @@ export default function Header() {
 
           {/* Navigation Links - Desktop */}
           <nav className="hidden lg:flex items-center space-x-8">
-            {sections.map((section) => (
+            {navSections.map((section) => (
               <div key={section.name} className="relative group">
                 <Link
                   href={section.url}
@@ -136,8 +124,8 @@ export default function Header() {
                         ? "bg-amber-100 text-amber-700"
                         : "bg-white/20 text-amber-300"
                       : isScrolled || !isHomePage
-                      ? "text-gray-700 hover:text-amber-600 hover:bg-amber-50"
-                      : "text-white hover:text-amber-400 hover:bg-white/10"
+                        ? "text-gray-700 hover:text-amber-600 hover:bg-amber-50"
+                        : "text-white hover:text-amber-400 hover:bg-white/10"
                   }`}
                   onMouseEnter={() =>
                     section.hasDropdown && setCollectionsOpen(true)
@@ -203,7 +191,7 @@ export default function Header() {
 
         {/* Mobile Menu - Full Screen Overlay */}
         <div
-          className={`lg:hidden fixed inset-0 z-40 transition-all duration-300 ${
+          className={`lg:hidden fixed overflow-x-hidden h-screen inset-0 z-40 transition-all duration-300 ${
             menuOpen ? "opacity-100 visible" : "opacity-0 invisible"
           }`}
         >
@@ -245,7 +233,7 @@ export default function Header() {
 
             {/* Navigation */}
             <div className="p-6 space-y-2">
-              {sections.map((section) => (
+              {navSections.map((section) => (
                 <div key={section.name}>
                   <Link
                     href={section.url}

@@ -39,7 +39,8 @@ const AdminLayout = ({ children }: { children: ReactNode }) => {
                     alt="Makrana Premium"
                     width={40}
                     height={40}
-                    className="rounded-full border-2 border-amber-200"
+                    className="rounded-full w-12 h-12 border-2 border-amber-200"
+
                   />
                   <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white"></div>
                 </div>

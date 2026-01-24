@@ -27,6 +27,7 @@ interface AdminProductsParams {
   categories: CategoryType[]
 }
 
+
 const AdminProducts = ({ selectedCategory, page, totalPages, products, categories }: AdminProductsParams) => {
   const router = useRouter()
   const searchParams = useSearchParams()

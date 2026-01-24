@@ -12,7 +12,6 @@ export async function GET(req: NextRequest) {
 
     const { searchParams } = new URL(req.url);
     const categoryId = searchParams.get("categoryId");
-
     const page = Number(searchParams.get("page"));
 
     const products = await Product.find(categoryId ? { categoryId } : {})

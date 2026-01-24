@@ -11,23 +11,11 @@ import {
   Search,
   Grid3X3,
   List,
-  SortAsc,
-  SortDesc,
   Filter,
   Home,
-  ChevronRight,
   PartyPopper,
 } from "lucide-react";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import MasonryLayout from "./utils/masonry-layout";
 import ProductCard from "./utils/product-card";
-import Link from "next/link";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -37,7 +25,6 @@ import {
 } from "./ui/breadcrumb";
 
 type ViewMode = "grid" | "list";
-type SortOption = "name" | "newest" | "oldest";
 
 export default function Products({
   initialProducts,
@@ -49,49 +36,16 @@ export default function Products({
   productCount: number;
 }) {
   const [products, setProducts] = useState<ProductType[]>(initialProducts);
-  const [filteredProducts, setFilteredProducts] =
-    useState<ProductType[]>(initialProducts);
   const [page, setPage] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<ViewMode>("grid");
-  const [sortBy, setSortBy] = useState<SortOption>("newest");
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const observerRef = useRef<HTMLDivElement | null>(null);
 
   const categoryName =
     products[0]?.categoryId?.name
       ?.replace(/-/g, " ")
       .replace(/\b\w/g, (c: string) => c.toUpperCase()) || "Products";
-
-  useEffect(() => {
-    const filtered = products.filter((product) =>
-      product.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-
-    filtered.sort((a, b) => {
-      let comparison = 0;
-      switch (sortBy) {
-        case "name":
-          comparison = a.name.localeCompare(b.name);
-          break;
-        case "newest":
-          comparison =
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-          break;
-        case "oldest":
-          comparison =
-            new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
-          break;
-        default:
-          comparison =
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-      }
-      return sortOrder === "asc" ? comparison : -comparison;
-    });
-
-    setFilteredProducts(filtered);
-  }, [products, searchQuery, sortBy, sortOrder]);
 
   const fetchMoreProducts = async () => {
     if (isLoading) return;
@@ -134,7 +88,7 @@ export default function Products({
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="max-w-screen overflow-x-hidden   min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Hero Section */}
       <div className="relative bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white pt-24 pb-16">
         <div className="absolute inset-0 bg-black/20"></div>
@@ -219,37 +173,6 @@ export default function Products({
 
             {/* Controls */}
             <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-3">
-              {/* Sort */}
-              <Select
-                value={sortBy}
-                onValueChange={(value: SortOption) => setSortBy(value)}
-              >
-                <SelectTrigger className="w-full sm:w-40">
-                  <SelectValue placeholder="Sort by" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="newest">Newest First</SelectItem>
-                  <SelectItem value="oldest">Oldest First</SelectItem>
-                  <SelectItem value="name">Name</SelectItem>
-                </SelectContent>
-              </Select>
-
-              {/* Sort Order */}
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() =>
-                  setSortOrder(sortOrder === "asc" ? "desc" : "asc")
-                }
-                className="border-gray-300"
-              >
-                {sortOrder === "asc" ? (
-                  <SortAsc className="w-4 h-4" />
-                ) : (
-                  <SortDesc className="w-4 h-4" />
-                )}
-              </Button>
-
               {/* View Mode */}
               <div className="flex border border-gray-300 rounded-lg overflow-hidden">
                 <Button
@@ -275,7 +198,7 @@ export default function Products({
                 variant="secondary"
                 className="px-3 py-1 bg-amber-100 text-amber-800"
               >
-                {filteredProducts.length} results
+                {products.length} results
               </Badge>
             </div>
           </div>
@@ -284,7 +207,7 @@ export default function Products({
 
       {/* Products Section */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        {filteredProducts.length === 0 ? (
+        {products.length === 0 ? (
           <div className="flex flex-col items-center justify-center text-center py-16 sm:py-20">
             <div className="relative mb-6 sm:mb-8">
               <Image
@@ -325,13 +248,13 @@ export default function Products({
               // <MasonryLayout breakpoints={{ 1500: 4, 1200: 3, 768: 2, 500: 1 }}>
               // {/* </MasonryLayout> */}
               <div className="grid grid-cols-1 min-[540]:grid-cols-2 min-[800]:grid-cols-3 xl:grid-cols-4 gap-4">
-                {filteredProducts.map((product) => (
+                {products.map((product) => (
                   <ProductCard key={product.id} product={product} />
                 ))}
               </div>
             ) : (
               <div className="space-y-4 sm:space-y-6">
-                {filteredProducts.map((product) => (
+                {products.map((product) => (
                   <ProductCard key={product.id} product={product} listView />
                 ))}
               </div>
@@ -354,8 +277,8 @@ export default function Products({
               <div className="text-center py-6 sm:py-12">
                 <div className="inline-flex items-center space-x-2 bg-gray-100 rounded-full px-4 sm:px-6 py-2 sm:py-3">
                   <span className="text-gray-600">
-                    <PartyPopper className="inline" /> You&apos;ve seen all products
-                    in this category!
+                    <PartyPopper className="inline" /> You&apos;ve seen all
+                    products in this category!
                   </span>
                 </div>
               </div>

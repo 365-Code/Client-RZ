@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://makranapremium.com'),
+  metadataBase: new URL("https://makranapremium.com"),
   // metadataBase: new URL('http://localhost.com'),
   title: {
     default: "Makrana Premium",

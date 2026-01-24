@@ -16,7 +16,7 @@ const Hero = () => {
           alt="Luxury Marble Showroom"
           fill
           priority
-          quality={90}
+          quality={90}  
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/70" />
       </div>
