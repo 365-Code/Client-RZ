@@ -19,7 +19,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+
 export const metadata: Metadata = {
+  verification: {
+    google: "qPm6LNMecy8-8L1PfFsQKVZnIEnEsAAEDXDJZqiKiE4"
+  },
   metadataBase: new URL("https://makranapremium.com"),
   // metadataBase: new URL('http://localhost.com'),
   title: {
